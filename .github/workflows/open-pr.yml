@@ -1,0 +1,51 @@
+name: Open Pull Request
+
+# only trigger on pull request open or reopen events
+on:
+  pull_request:
+    types: [ opened, reopened ]
+
+jobs:
+  call-metadata-workflow:
+    uses: ./.github/workflows/meta.yml 
+    secrets: inherit
+  create-pr-environment:
+    needs: [call-metadata-workflow]
+    runs-on: ubuntu-latest
+    environment: ci
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+      - name: Set Env Vars
+        id: set-env-vars
+        run: |
+          echo "stack-name=${{ needs.call-metadata-workflow.outputs.pr-env }}" >> $GITHUB_ENV
+          echo "bucket-name=${{ needs.call-metadata-workflow.outputs.pr-env }}" >> $GITHUB_ENV
+      - name: Create PR Environment
+        id: create-pr-env
+        working-directory: ./scripts/pr-env
+        run: |
+          echo "creating new environment for PR #${{ github.event.number }}"
+          aws cloudformation create-stack \
+                    --template-body file://s3-website.yml \
+                    --stack-name "${{ env.stack-name }}"  \
+                    --parameters  ParameterKey=BucketName,ParameterValue="${{ env.bucket-name }}" \
+                    --on-failure DO_NOTHING \
+                    --capabilities CAPABILITY_NAMED_IAM
+          aws cloudformation wait stack-create-complete --stack-name "${{ env.stack-name }}"
+          aws s3 cp --sse AES256 --acl public-read index.html "s3://${{ env.bucket-name }}/"
+          aws s3 cp --sse AES256 --acl public-read error.html "s3://${{ env.bucket-name }}/"
+      - name: Comment on PR with Environment URL
+        env:
+            GH_TOKEN: ${{ github.token }}
+        run: |
+          export URL="http://${{ env.bucket-name }}.s3-website.us-east-2.amazonaws.com"
+          export MESSAGE="please review changes at ${URL}"
+          gh pr comment ${{ github.event.number }} --body "${MESSAGE}"
+          echo "::notice title=Created PR Environment::environment url: $URL"
