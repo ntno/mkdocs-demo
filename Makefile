@@ -12,7 +12,7 @@ endif
 
 ################################################
 ## run from machine with docker installed
-## machine requires GNU Make
+## requires GNU Make
 ################################################
 ubuntu: 
 	docker compose run --rm ubuntu 
