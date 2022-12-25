@@ -25,7 +25,7 @@ jobs:
           archive-enabled: true
           version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
           env-name: prod
-          aws-region: us-east-2
+          aws-region: us-east-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Report Result
@@ -48,11 +48,11 @@ jobs:
           version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
           env-name: prod
           s3-bucket: ${{ needs.call-metadata-workflow.outputs.pr-env }}
-          aws-region: us-east-2
+          aws-region: us-east-1
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       - name: Report Result
         run: |
-          export MESSAGE="PR #${{ needs.call-metadata-workflow.outputs.pr-number }} deployed to  http://${{ needs.call-metadata-workflow.outputs.pr-env }}.s3-website.us-east-2.amazonaws.com with version=${{ needs.call-metadata-workflow.outputs.build-tag }}"        
+          export MESSAGE="PR #${{ needs.call-metadata-workflow.outputs.pr-number }} deployed to  http://${{ needs.call-metadata-workflow.outputs.pr-env }}.s3-website.us-east-1.amazonaws.com with version=${{ needs.call-metadata-workflow.outputs.build-tag }}"        
           echo "::notice title=PR Deployed::$MESSAGE"
       

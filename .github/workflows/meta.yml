@@ -4,6 +4,11 @@ name: Metadata
 on: 
   workflow_dispatch:
   workflow_call:
+    inputs:
+      pr-prefix:
+        description: 'A prefix for the pr environment name'
+        required: true
+        type: string
     # Map the workflow outputs to job outputs
     outputs:
       event-name:
@@ -61,7 +66,7 @@ jobs:
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
               export PR_NUMBER=$( cat ${{ github.event_path }} | jq .number -r )
               echo pr-number=${PR_NUMBER} >> $GITHUB_OUTPUT
-              echo pr-env=ntno-net-ci-pr-${PR_NUMBER} >> $GITHUB_OUTPUT
+              echo pr-env=${{ inputs.pr-prefix }}${PR_NUMBER} >> $GITHUB_OUTPUT
           else
               echo "pr-number=null" >> $GITHUB_OUTPUT
               echo "pr-env=null" >> $GITHUB_OUTPUT
