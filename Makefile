@@ -38,7 +38,7 @@ deploy: check-env check-region check-bucket-name
 #########################################################
 setup-mkdocs: check-env check-region check-download-directory
 	curl https://raw.githubusercontent.com/mitchellkrogza/nginx-ultimate-bad-bot-blocker/master/robots.txt/robots.txt --output $(download-directory)robots.txt
-	cp $(download-directory)robots.txt ./docs/robots.txt
+	mv $(download-directory)robots.txt ./docs/robots.txt
 
 build-mkdocs: check-env check-region clean install-requirements
 	eval "$$(buildenv -e $(env) -d $(region))" && \
