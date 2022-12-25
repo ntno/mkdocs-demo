@@ -2,7 +2,7 @@
 vars: 
   GREETING: "hello"
   PROJECT_NAME: "mkdocs-demo"
-  CI_PREFIX: "ci-mkdocs-demo-pr-"
+  CI_PR_PREFIX: "ci-mkdocs-demo-pr-"
 environments:
   dev:
     dcs:
