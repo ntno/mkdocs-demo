@@ -9,6 +9,8 @@ jobs:
   call-metadata-workflow:
     uses: ./.github/workflows/meta.yml 
     secrets: inherit
+    with:
+      pr-prefix: "ci-mkdocs-demo-pr-"
   create-pr-environment:
     needs: [call-metadata-workflow]
     runs-on: ubuntu-latest
