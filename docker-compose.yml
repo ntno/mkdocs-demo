@@ -1,0 +1,21 @@
+version: '3'
+services:
+  local_development_server:
+    build: .
+    restart: "no"
+    ports:
+      - "5000:5000"
+    environment:
+      LOG_LEVEL: info 
+    volumes:
+      - './:/usr/src/'
+  ubuntu:
+    image: ntno/ubuntu-build-base:1.0.0
+    restart: "no"    
+    volumes:
+      - ~/.aws/:/root/.aws:ro    #ro for read only
+      - $PWD:/usr/src
+    environment:
+      AWS_PROFILE: ntno
+      AWS_SHARED_CREDENTIALS_FILE: /root/.aws/credentials
+      AWS_SDK_LOAD_CONFIG: 1    
