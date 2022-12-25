@@ -29,9 +29,6 @@ serve: check-env check-region
 build: check-env check-region
 	docker compose run --entrypoint "/bin/bash" ubuntu -c "make build-mkdocs env=$(env) region=$(region)"
 
-# deploy: check-env check-region
-# 	docker compose run --entrypoint "/bin/bash" ubuntu -c "source ./scripts/deploy.sh $(env) $(region)"
-
 
 #########################################################
 ## run from machine or container with required software
@@ -63,7 +60,7 @@ get-mkdocs-archive: check-env check-region check-version clean check-download-di
 deploy-mkdocs: check-env check-region check-bucket-name
 	aws s3 sync $(DRY_RUN_FLAG) $(QUIET_FLAG) --no-progress --sse AES256 --acl public-read ./site/ s3://$(bucket-name)/
 
-serve-mkdocs: check-env check-region
+serve-mkdocs: check-env check-region clean install-requirements
 	eval "$$(buildenv -e $(env) -d $(region))" && \
 	mkdocs serve -v --dev-addr=0.0.0.0:5000
 

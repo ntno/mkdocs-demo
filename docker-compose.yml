@@ -1,7 +1,7 @@
 version: '3'
 services:
   local_development_server:
-    build: .
+    image: ntno/ubuntu-build-base:1.0.0
     restart: "no"
     ports:
       - "5000:5000"

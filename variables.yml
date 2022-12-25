@@ -1,0 +1,21 @@
+---
+vars: 
+  GREETING: "hello"
+environments:
+  dev:
+    dcs:
+      local:
+        vars:
+          GREETING: Hi
+          NAME: Eve 
+      us-east-1:
+        vars:
+          AWS_REGION: "us-east-1"
+          NAME: "Bob"
+  prod:
+    dcs:
+      us-east-1:
+        vars:
+          AWS_REGION: "us-east-1"
+          NAME: "Alice"
+          
