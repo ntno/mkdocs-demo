@@ -1,4 +1,4 @@
 docs/robots.txt
-site/*
+site*
 *.tar
 manifest.txt

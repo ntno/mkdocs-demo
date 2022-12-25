@@ -6,8 +6,8 @@ environments:
     dcs:
       local:
         vars:
-          GREETING: Hi
-          NAME: Eve 
+          GREETING: "Hi"
+          NAME: "Eve" 
       us-east-1:
         vars:
           AWS_REGION: "us-east-1"
