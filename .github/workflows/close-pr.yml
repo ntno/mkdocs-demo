@@ -1,0 +1,38 @@
+name: Close Pull Request
+
+# only trigger on pull request closed/merged events
+on:
+  pull_request:
+    types: [ closed, merged ]
+
+jobs:
+  call-metadata-workflow:
+    uses: ./.github/workflows/meta.yml 
+    secrets: inherit
+  destroy-pr-environment:
+    needs: [call-metadata-workflow]
+    runs-on: ubuntu-latest
+    environment: ci
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Set Env Vars
+        id: set-env-vars
+        run: |
+          echo "stack-name=${{ needs.call-metadata-workflow.outputs.pr-env }}" >> $GITHUB_ENV
+          echo "bucket-name=${{ needs.call-metadata-workflow.outputs.pr-env }}" >> $GITHUB_ENV          
+      - name: Destroy PR Environment
+        run: |
+          echo "shutting down environment for PR #${{ github.event.number }}"
+          
+          echo "forcing non-empty bucket delete: s3://${{ env.bucket-name }}"
+          aws s3 rb "s3://${{ env.bucket-name }}" --force  
+
+          echo "deleting cloudformation stack: ${{ env.stack-name }}"
+          aws cloudformation delete-stack --stack-name "${{ env.stack-name }}"
+
+          echo "::notice title=Destroyed PR Environment::environment name: ${{ env.stack-name }}"

@@ -1,0 +1,58 @@
+# Simple workflow for testing mkdocs site 
+name: Test Pull Request
+
+on:
+  workflow_dispatch:
+  pull_request:
+    types: [ synchronize ]
+  
+jobs:
+  call-metadata-workflow:
+    uses: ./.github/workflows/meta.yml 
+    secrets: inherit 
+  build-pr:
+    needs: [call-metadata-workflow]
+    runs-on: ubuntu-latest
+    environment: ci
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Buildenv
+        uses: ntno/setup-buildenv@v1        
+      - name: Build PR
+        uses: ntno/build-mkdocs-composite-action@add-make-vars
+        with:
+          archive-enabled: true
+          version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
+          env-name: prod
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Report Result
+        run: |
+          export MESSAGE="PR #${{ needs.call-metadata-workflow.outputs.pr-number }} built with version=${{ needs.call-metadata-workflow.outputs.build-tag }}"
+          echo "::notice title=PR Built::$MESSAGE"
+  deploy-pr:
+    needs: [call-metadata-workflow, build-pr]
+    runs-on: ubuntu-latest
+    environment: ci
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Buildenv
+        uses: ntno/setup-buildenv@v1   
+      - name: Deploy PR
+        id: deploy-mkdocs
+        uses: ntno/deploy-mkdocs-composite-action@add-dry-run-option
+        with:         
+          version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
+          env-name: prod
+          s3-bucket: ${{ needs.call-metadata-workflow.outputs.pr-env }}
+          aws-region: us-east-1
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      - name: Report Result
+        run: |
+          export MESSAGE="PR #${{ needs.call-metadata-workflow.outputs.pr-number }} deployed to  http://${{ needs.call-metadata-workflow.outputs.pr-env }}.s3-website.us-east-1.amazonaws.com with version=${{ needs.call-metadata-workflow.outputs.build-tag }}"        
+          echo "::notice title=PR Deployed::$MESSAGE"
+      
