@@ -29,6 +29,8 @@ serve: check-env check-region
 build: check-env check-region
 	docker compose run --entrypoint "/bin/bash" ubuntu -c "make build-mkdocs env=$(env) region=$(region)"
 
+deploy: check-env check-region check-bucket-name
+	docker compose run --entrypoint "/bin/bash" ubuntu -c "make deploy-mkdocs env=$(env) region=$(region) bucket-name=$(bucket-name)"
 
 #########################################################
 ## run from machine or container with required software
