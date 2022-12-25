@@ -1,6 +1,6 @@
 SHELL:=/bin/bash
 artifact-bucket:=s3://artifacts.ntno.net
-artifact-prefix:=/project/mkdocs-demo/
+artifact-prefix:=/projects/mkdocs-demo/
 
 ifeq ($(DRY_RUN),1)
    DRY_RUN_FLAG = --dryrun
