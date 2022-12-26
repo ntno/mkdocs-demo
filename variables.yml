@@ -10,14 +10,20 @@ environments:
         vars:
           GREETING: "Hi"
           NAME: "Eve" 
+          ENV_LEVEL: "dev"
+          REGION: "local"
       us-east-1:
         vars:
           AWS_REGION: "us-east-1"
           NAME: "Bob"
+          ENV_LEVEL: "dev"
+          REGION: "us-east-1"
   prod:
     dcs:
       us-east-1:
         vars:
           AWS_REGION: "us-east-1"
           NAME: "Alice"
+          ENV_LEVEL: "prod"
+          REGION: "us-east-1"
           
