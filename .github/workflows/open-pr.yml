@@ -16,7 +16,7 @@ jobs:
     uses: ./.github/workflows/meta.yml 
     secrets: inherit
     with:
-      pr-prefix: "factually-settled-boxer-ci-pr"
+      pr-prefix: "factually-settled-boxer-ci-pr-"
   create-pr-environment:
     needs: [call-metadata-workflow]
     runs-on: ubuntu-latest
