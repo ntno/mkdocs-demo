@@ -2,3 +2,6 @@ docs/robots.txt
 site*
 *.tar
 manifest.txt
+infra/.terraform
+infra/*.tfplan
+infra/.terraform.lock.hcl
