@@ -16,7 +16,7 @@ jobs:
     uses: ./.github/workflows/meta.yml 
     secrets: inherit 
     with:
-      pr-prefix: "TODO"
+      pr-prefix: "factually-settled-boxer-ci-pr"
   build-pr:
     needs: [call-metadata-workflow]
     runs-on: ubuntu-latest
@@ -31,7 +31,7 @@ jobs:
         with:
           archive-enabled: true
           version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
-          env-name: prod
+          env-name: dev
           aws-region: us-east-1
           role-to-assume: ${{ secrets.ROLE_ARN }}
       - name: Report Result
@@ -52,7 +52,7 @@ jobs:
         uses: ntno/deploy-mkdocs-composite-action@v2
         with:         
           version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
-          env-name: prod
+          env-name: dev
           s3-bucket: ${{ needs.call-metadata-workflow.outputs.pr-env }}
           aws-region: us-east-1
           role-to-assume: ${{ secrets.ROLE_ARN }}
