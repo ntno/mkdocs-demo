@@ -38,3 +38,5 @@ plugins:
 extra:
   GREETING: !ENV [GREETING]
   NAME: !ENV [NAME]
+  ENV_LEVEL: !ENV [ENV_LEVEL]
+  REGION: !ENV [REGION]
