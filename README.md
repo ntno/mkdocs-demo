@@ -1,7 +1,8 @@
 # mkdocs-demo
 mkdocs demo site  
 
-[![Release](https://github.com/ntno/mkdocs-demo/actions/workflows/release.yml/badge.svg)](https://github.com/ntno/mkdocs-demo/actions/workflows/release.yml) - deploys to [factually-settled-boxer.s3-website-us-east-1.amazonaws.com](http://factually-settled-boxer.s3-website-us-east-1.amazonaws.com/)
+[![Release](https://github.com/ntno/mkdocs-demo/actions/workflows/release.yml/badge.svg)](https://github.com/ntno/mkdocs-demo/actions/workflows/release.yml)  
+release deploys to [factually-settled-boxer.s3-website-us-east-1.amazonaws.com](http://factually-settled-boxer.s3-website-us-east-1.amazonaws.com/)
 
 # prerequisites
 
