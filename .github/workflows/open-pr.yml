@@ -16,7 +16,7 @@ jobs:
     uses: ./.github/workflows/meta.yml 
     secrets: inherit
     with:
-      pr-prefix: "factually-settled-boxer-ci-pr"
+      pr-prefix: "factually-settled-boxer-ci-pr-"
   create-pr-environment:
     needs: [call-metadata-workflow]
     runs-on: ubuntu-latest
@@ -36,7 +36,7 @@ jobs:
           echo "bucket-name=${{ needs.call-metadata-workflow.outputs.pr-env }}" >> $GITHUB_ENV
       - name: Create PR Environment
         id: create-pr-env
-        working-directory: ./ci/pr-env
+        working-directory: ./ci
         run: |
           echo "creating new environment for PR #${{ github.event.number }}"
           aws cloudformation create-stack \

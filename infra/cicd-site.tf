@@ -4,7 +4,7 @@ resource "random_pet" "site_name" {
 }
 
 locals {
-  ci_prefix            = format("%s-ci-pr", local.site_name)
+  ci_prefix            = format("%s-ci-pr-", local.site_name)
   ci_role_name         = format("CI-%s", local.site_name)
   cd_role_name         = format("CD-%s", local.site_name)
   artifact_bucket_name = format("%s-artifacts", local.site_name)

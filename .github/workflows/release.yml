@@ -1,0 +1,77 @@
+# Simple workflow for releasing mkdocs site 
+name: Release
+
+on:
+  workflow_dispatch:
+  release:
+    types: [ published ]
+
+# These permissions are needed to interact with GitHub's OIDC Token endpoint.
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  call-metadata-workflow:
+    uses: ./.github/workflows/meta.yml 
+    secrets: inherit 
+    with:
+      pr-prefix: "factually-settled-boxer-ci-pr-"
+  build-release:
+    needs: [call-metadata-workflow]
+    runs-on: ubuntu-latest
+    environment: ci
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Buildenv
+        uses: ntno/setup-buildenv@v1     
+      - name: Build Release
+        uses: ntno/build-mkdocs-composite-action@v3
+        with:
+          archive-enabled: true
+          version: ${{ needs.call-metadata-workflow.outputs.release-name }}
+          env-name: prod
+          aws-region: us-east-1
+          role-to-assume: ${{ secrets.ROLE_ARN }}
+      - name: Report Result
+        run: |
+          export MESSAGE="Release ${{ needs.call-metadata-workflow.outputs.release-name }} built with ${{ needs.call-metadata-workflow.outputs.build-tag }}"
+          echo "::notice title=Release Built::$MESSAGE"
+  deploy-release:
+    needs: [call-metadata-workflow, build-release]
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Buildenv
+        uses: ntno/setup-buildenv@v1
+      - name: Set Env Vars
+        id: set-env-vars
+        run: |
+          if [[ "${{ needs.call-metadata-workflow.outputs.release-is-prerelease }}" == "true" ]]; then
+              echo "Release is marked as prerelease, running deploy as dry-run..."
+              echo "deploy-flags=DRY_RUN=1" >> $GITHUB_ENV
+          else
+              echo "deploy-flags=DRY_RUN=0" >> $GITHUB_ENV
+          fi   
+      - name: Deploy Release
+        id: deploy-mkdocs
+        uses: ntno/deploy-mkdocs-composite-action@v2
+        with:         
+          version: ${{ needs.call-metadata-workflow.outputs.release-name }}
+          env-name: prod
+          s3-bucket: factually-settled-boxer
+          aws-region: us-east-1
+          make-vars-for-deploy-target: ${{ env.deploy-flags }}
+          role-to-assume: ${{ secrets.ROLE_ARN }}
+      - name: Report Result
+        run: |
+          if [[ "${{ needs.call-metadata-workflow.outputs.release-is-prerelease }}" == "true" ]]; then
+              export MESSAGE="Release ${{ needs.call-metadata-workflow.outputs.release-name }} is marked as prerelease, deployment skipped..."
+              echo "::notice title=Release Deploy Skipped::$MESSAGE"
+          else
+              export MESSAGE="Release ${{ needs.call-metadata-workflow.outputs.release-name }} deployed to http://factually-settled-boxer.s3-website.us-east-1.amazonaws.com with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
+              echo "::notice title=Release Deployed::$MESSAGE"
+          fi 
