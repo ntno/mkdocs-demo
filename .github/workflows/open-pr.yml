@@ -36,7 +36,7 @@ jobs:
           echo "bucket-name=${{ needs.call-metadata-workflow.outputs.pr-env }}" >> $GITHUB_ENV
       - name: Create PR Environment
         id: create-pr-env
-        working-directory: ./scripts/pr-env
+        working-directory: ./ci/pr-env
         run: |
           echo "creating new environment for PR #${{ github.event.number }}"
           aws cloudformation create-stack \
@@ -47,7 +47,7 @@ jobs:
                     --capabilities CAPABILITY_NAMED_IAM
           aws cloudformation wait stack-create-complete --stack-name "${{ env.stack-name }}"
           aws s3 cp --sse AES256 --acl public-read index.html "s3://${{ env.bucket-name }}/"
-          aws s3 cp --sse AES256 --acl public-read error.html "s3://${{ env.bucket-name }}/"
+          aws s3 cp --sse AES256 --acl public-read error.html "s3://${{ env.bucket-name }}/error/index.html"
       - name: Comment on PR with Environment URL
         env:
             GH_TOKEN: ${{ github.token }}
