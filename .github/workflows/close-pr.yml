@@ -5,12 +5,17 @@ on:
   pull_request:
     types: [ closed, merged ]
 
+# These permissions are needed to interact with GitHub's OIDC Token endpoint.
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   call-metadata-workflow:
     uses: ./.github/workflows/meta.yml 
     secrets: inherit
     with:
-      pr-prefix: "ci-mkdocs-demo-pr-"
+      pr-prefix: "TODO"
   destroy-pr-environment:
     needs: [call-metadata-workflow]
     runs-on: ubuntu-latest
@@ -19,9 +24,8 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+          role-to-assume: ${{ secrets.ROLE_ARN }}
       - name: Set Env Vars
         id: set-env-vars
         run: |

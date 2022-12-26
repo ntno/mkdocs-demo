@@ -6,10 +6,17 @@ on:
   pull_request:
     types: [ synchronize ]
   
+# These permissions are needed to interact with GitHub's OIDC Token endpoint.
+permissions:
+  id-token: write
+  contents: read
+
 jobs:
   call-metadata-workflow:
     uses: ./.github/workflows/meta.yml 
     secrets: inherit 
+    with:
+      pr-prefix: "TODO"
   build-pr:
     needs: [call-metadata-workflow]
     runs-on: ubuntu-latest
@@ -20,14 +27,13 @@ jobs:
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1        
       - name: Build PR
-        uses: ntno/build-mkdocs-composite-action@add-make-vars
+        uses: ntno/build-mkdocs-composite-action@v3
         with:
           archive-enabled: true
           version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
           env-name: prod
           aws-region: us-east-1
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.ROLE_ARN }}
       - name: Report Result
         run: |
           export MESSAGE="PR #${{ needs.call-metadata-workflow.outputs.pr-number }} built with version=${{ needs.call-metadata-workflow.outputs.build-tag }}"
@@ -43,14 +49,13 @@ jobs:
         uses: ntno/setup-buildenv@v1   
       - name: Deploy PR
         id: deploy-mkdocs
-        uses: ntno/deploy-mkdocs-composite-action@add-dry-run-option
+        uses: ntno/deploy-mkdocs-composite-action@v2
         with:         
           version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
           env-name: prod
           s3-bucket: ${{ needs.call-metadata-workflow.outputs.pr-env }}
           aws-region: us-east-1
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.ROLE_ARN }}
       - name: Report Result
         run: |
           export MESSAGE="PR #${{ needs.call-metadata-workflow.outputs.pr-number }} deployed to  http://${{ needs.call-metadata-workflow.outputs.pr-env }}.s3-website.us-east-1.amazonaws.com with version=${{ needs.call-metadata-workflow.outputs.build-tag }}"        
