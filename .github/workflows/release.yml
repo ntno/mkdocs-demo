@@ -33,6 +33,10 @@ jobs:
     runs-on: ubuntu-latest
     environment: ci
     steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.tag }}
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1     
       - name: Build Release
@@ -54,6 +58,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.tag }}
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1
       - name: Set Env Vars
