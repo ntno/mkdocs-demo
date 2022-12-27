@@ -24,21 +24,25 @@ resource "random_pet" "site_name" {
   length = 3
 }
 
-module "prod_site_bucket" {
+module "production_site_bucket" {
   source      = "./modules/simple-site-bucket"
   bucket_name = local.site_name
-  tags        = local.global_tags
+  tags = merge(local.global_tags, {
+    project-environment = "production"
+  })
 }
 
-module "dev_site_bucket" {
+module "development_site_bucket" {
   source      = "./modules/simple-site-bucket"
   bucket_name = local.dev_site_name
-  tags        = local.global_tags
+  tags = merge(local.global_tags, {
+    project-environment = "development"
+  })
 }
 
 locals {
   site_name            = var.site_bucket_name == "" ? random_pet.site_name.id : var.site_bucket_name
-  dev_site_name        = format("%s-dev", local.site_name)
+  dev_site_name        = format("%s-development", local.site_name)
   artifact_bucket_name = format("%s-artifacts", local.site_name)
   global_tags = {
     CreatedBy   = "mkdocs-demo"
@@ -61,11 +65,16 @@ module "demo_site_cicd" {
     "production" = {
       github_environment_name = "prod"
       deploy_bucket           = local.site_name
+      tags = {
+        project-environment = "production"
+      }
+    },
+    "development" = {
+      github_environment_name = "ci"
+      deploy_bucket           = local.dev_site_name
+      tags = {
+        project-environment = "development"
+      }
     }
   }
-  # ,
-  # "development" = {
-  #   github_environment_name = "ci"
-  #   deploy_bucket           = "dev.factually-settled-boxer"
-  # }
 }

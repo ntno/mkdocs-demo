@@ -20,10 +20,10 @@ output "artifact_bucket_name" {
 
 output "development_bucket_name" {
   description = "development S3 bucket name"
-  value       = module.dev_site_bucket.site_bucket_info.id
+  value       = module.development_site_bucket.site_bucket_info.id
 }
 
 output "production_bucket_name" {
   description = "production S3 bucket name"
-  value       = module.prod_site_bucket.site_bucket_info.id
+  value       = module.production_site_bucket.site_bucket_info.id
 }
