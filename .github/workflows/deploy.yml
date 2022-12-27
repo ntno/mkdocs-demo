@@ -1,5 +1,5 @@
-# Simple workflow for releasing mkdocs site 
-name: Release
+# Simple workflow for deploying mkdocs site 
+name: Deploy MkDocs
 
 on:
   workflow_dispatch:
@@ -28,7 +28,7 @@ jobs:
     needs: [check-out-tag]
     uses: ./.github/workflows/meta.yml 
     secrets: inherit 
-  build-release:
+  build-mkdocs:
     needs: [check-out-tag, call-metadata-workflow]
     runs-on: ubuntu-latest
     environment: ci
@@ -39,7 +39,7 @@ jobs:
           ref: ${{ inputs.tag }}
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1     
-      - name: Build Release
+      - name: Build MkDocs
         uses: ntno/build-mkdocs-composite-action@v3
         with:
           archive-enabled: true
@@ -50,9 +50,9 @@ jobs:
       - name: Report Result
         run: |
           export MESSAGE="${{ inputs.tag }} built with ${{ needs.call-metadata-workflow.outputs.build-tag }}"
-          echo "::notice title=Release Built::$MESSAGE"
-  deploy-release:
-    needs: [call-metadata-workflow, build-release]
+          echo "::notice title=Built MkDocs::$MESSAGE"
+  deploy-mkdocs:
+    needs: [call-metadata-workflow, build-mkdocs]
     runs-on: ubuntu-latest
     environment: prod
     steps:
@@ -71,7 +71,7 @@ jobs:
           else
               echo "deploy-flags=DRY_RUN=0" >> $GITHUB_ENV
           fi   
-      - name: Deploy Release
+      - name: Deploy MkDocs
         id: deploy-mkdocs
         uses: ntno/deploy-mkdocs-composite-action@v2
         with:         
