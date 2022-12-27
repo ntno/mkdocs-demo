@@ -29,6 +29,12 @@ locals {
     project     = "mkdocs-demo"
     domain      = "personal"
   }
+  ci_prefix            = format("%s-ci-pr-", local.site_name)
+  artifact_bucket_name = format("%s-artifacts", local.site_name)
+}
+
+resource "random_pet" "site_name" {
+  length = 3
 }
 
 module "prod_site_bucket" {
@@ -40,5 +46,15 @@ module "prod_site_bucket" {
 module "dev_site_bucket" {
   source      = "./modules/simple-site-bucket"
   bucket_name = local.dev_site_name
+  tags        = local.global_tags
+}
+
+module "demo_site_cicd" {
+  source               = "git::https://github.com/ntno/tf-module-static-site-cicd?ref=refactor-for-multiple-deployment-environments"
+  artifact_bucket_name = local.artifact_bucket_name
+  ci_prefix            = local.ci_prefix
+
+  github_repo = "mkdocs-demo"
+  github_org  = "ntno"
   tags        = local.global_tags
 }

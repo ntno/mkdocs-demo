@@ -8,3 +8,15 @@ variable "site_bucket_name" {
   type        = string
   default     = ""
 }
+
+variable "github_repo" {
+  description = "GitHub repository for OIDC"
+  type        = string
+  default     = "mkdocs-demo"
+}
+
+variable "github_org" {
+  description = "GitHub organization for OIDC"
+  type        = string
+  default     = "ntno"
+}

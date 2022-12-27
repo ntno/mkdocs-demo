@@ -10,17 +10,20 @@ terraform-backend-region=us-east-1
 terraform-backend-bucket=tf-state-$(terraform-backend-region)-$(env)
 terraform-backend-key=mkdocs-demo.tfstate
 
-init: check-env check-region
+init: check-env check-region clean
 	terraform init -backend-config="bucket=$(terraform-backend-bucket)" -backend-config="region=$(terraform-backend-region)"
+
+validate: init
+	terraform fmt -recursive
+	terraform validate
 
 clean:
 	rm -rf .terraform
 	rm -rf .tfplan
 
-plan: check-env check-region init
+plan: check-env check-region validate
 	export "AWS_REGION=$(region)" && \
 	export "TF_VAR_region=$(region)" && \
-	terraform fmt && \
 	terraform plan -out=$(env).tfplan -state="$(terraform-backend-key)"
 
 apply: check-env check-region
