@@ -1,6 +1,10 @@
-output "ci_role_arn" {
-  description = "CI IAM Role ARN"
-  value       = module.demo_site_cicd.ci_role_info.arn
+output "ci_role_info" {
+  description = "CI IAM Role ARN, prefix restriction, and github_environment_name"
+  value = {
+    ci_role_arn             = module.demo_site_cicd.ci_role_info.arn
+    ci_prefix               = module.demo_site_cicd.ci_role_info.ci_prefix
+    github_environment_name = module.demo_site_cicd.ci_role_info.github_environment_name
+  }
 }
 
 output "cd_role_info" {
