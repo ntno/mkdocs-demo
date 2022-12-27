@@ -13,9 +13,9 @@ on:
         required: true
         type: choice
         options: 
-          - local
-          - dev
           - prod
+          - dev
+          - local
       perform-deploy:
         description: 'Enables deployment to factually-settled-boxer'
         required: true
