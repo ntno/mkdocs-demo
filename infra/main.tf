@@ -63,14 +63,14 @@ module "demo_site_cicd" {
 
   deployment_environments = {
     "production" = {
-      github_environment_name = "prod"
+      github_environment_name = "gh-prod"
       deploy_bucket           = local.site_name
       tags = {
         project-environment = "production"
       }
     },
     "development" = {
-      github_environment_name = "ci"
+      github_environment_name = "gh-dev"
       deploy_bucket           = local.dev_site_name
       tags = {
         project-environment = "development"
