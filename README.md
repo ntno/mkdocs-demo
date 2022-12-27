@@ -17,13 +17,19 @@ deployment workflow: (todo)
 
 ## local development
 
-### loads 'dev/local' site variables (see [variables.yml](variables.yml))
+ex: load 'dev/local' site variables
+see [variables.yml](variables.yml#L9-L12)  
+
 `make serve env=dev region=local`
 
-### loads 'dev/us-east-1' site variables (see [variables.yml](variables.yml))
+ex: load 'dev/us-east-1' site variables 
+see [variables.yml](variables.yml#L15-17)  
+
 `make serve env=dev region=us-east-1`    
 
-### loads 'prod/us-east-1' site variables (see [variables.yml](variables.yml))
+ex: load 'prod/us-east-1' site variables 
+see [variables.yml](variables.yml#L21-25)  
+
 `make serve env=prod region=us-east-1` 
 
 ## prerequisites
