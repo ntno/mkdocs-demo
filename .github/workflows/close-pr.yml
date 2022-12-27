@@ -15,7 +15,7 @@ jobs:
     uses: ./.github/workflows/meta.yml 
     secrets: inherit
     with:
-      pr-prefix: "factually-settled-boxer-ci-pr-"
+      pr-prefix: "ntno-mkdocs-demo-ci-pr-"
   destroy-pr-environment:
     needs: [call-metadata-workflow]
     runs-on: ubuntu-latest
