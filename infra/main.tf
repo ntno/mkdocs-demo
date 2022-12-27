@@ -20,10 +20,6 @@ data "aws_caller_identity" "current" {}
 
 data "aws_region" "current" {}
 
-resource "random_pet" "site_name" {
-  length = 3
-}
-
 module "production_site_bucket" {
   source      = "./modules/simple-site-bucket"
   bucket_name = local.site_name
@@ -41,7 +37,7 @@ module "development_site_bucket" {
 }
 
 locals {
-  site_name            = var.site_bucket_name == "" ? random_pet.site_name.id : var.site_bucket_name
+  site_name            = var.site_bucket_name
   dev_site_name        = format("%s-development", local.site_name)
   artifact_bucket_name = format("%s-artifacts", local.site_name)
   global_tags = {
