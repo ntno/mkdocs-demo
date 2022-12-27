@@ -34,8 +34,8 @@ resource "aws_s3_bucket_website_configuration" "site_bucket_website_configuratio
 }
 
 resource "aws_s3_bucket" "site_bucket" {
-  bucket = local.site_name
-  tags   = local.global_tags
+  bucket = var.bucket_name
+  tags   = var.tags
 
   force_destroy = true
 }
@@ -44,7 +44,7 @@ resource "aws_s3_bucket_policy" "site_bucket_policy" {
   bucket = aws_s3_bucket.site_bucket.id
   policy = templatefile("${path.module}/templates/policy.tpl",
     {
-      bucket-name = local.site_name
+      bucket-name = var.bucket_name
     }
   )
 }

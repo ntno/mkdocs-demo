@@ -12,11 +12,12 @@ output "cd_role_arn" {
   value       = module.demo_site_ci_cd.cd_role_arn
 }
 
-output "site_bucket_info" {
-  description = "Map containing the site bucket's arn, id, and website endpoint"
-  value = {
-    "arn"              = aws_s3_bucket.site_bucket.arn
-    "id"               = aws_s3_bucket.site_bucket.id
-    "website_endpoint" = aws_s3_bucket_website_configuration.site_bucket_website_configuration.website_endpoint
-  }
+output "dev_bucket_name" {
+  description = "dev S3 bucket name"
+  value       = module.dev_site_bucket.site_bucket_info.id
+}
+
+output "prod_bucket_name" {
+  description = "prod S3 bucket name"
+  value       = module.prod_site_bucket.site_bucket_info.id
 }

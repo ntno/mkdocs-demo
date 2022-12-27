@@ -1,5 +1,8 @@
 SHELL:=/bin/bash
 
+# note: this is a demo project; dev and prod terraform resources 
+# are deployed from the same tf config intentionally.  leave env=dev as default for 
+# terraform state backend
 env=dev
 region=us-east-1
 
