@@ -17,12 +17,13 @@ deployment workflow: (todo)
 
 ## local development
 
+### loads 'dev/local' site variables (see [variables.yml](variables.yml))
 `make serve env=dev region=local`
 
-or pass different values to view how site will be deployed in other environments:
-
+### loads 'dev/us-east-1' site variables (see [variables.yml](variables.yml))
 `make serve env=dev region=us-east-1`    
 
+### loads 'prod/us-east-1' site variables (see [variables.yml](variables.yml))
 `make serve env=prod region=us-east-1` 
 
 ## prerequisites
