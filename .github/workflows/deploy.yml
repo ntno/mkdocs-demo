@@ -5,9 +5,19 @@ on:
   workflow_dispatch:
     inputs:
       tag:
+        description: 'Tag to deploy'
         required: true
         type: string
+      env-vars:
+        description: 'Environment Variables to load'
+        required: true
+        type: choice
+        options: 
+          - local
+          - dev
+          - prod
       perform-deploy:
+        description: 'Enables deployment to factually-settled-boxer'
         required: true
         type: boolean
 
@@ -44,7 +54,7 @@ jobs:
         with:
           archive-enabled: true
           version: ${{ inputs.tag }}
-          env-name: prod
+          env-name: ${{ inputs.env-vars }}
           aws-region: us-east-1
           role-to-assume: ${{ secrets.ROLE_ARN }}
       - name: Report Result
@@ -76,7 +86,7 @@ jobs:
         uses: ntno/deploy-mkdocs-composite-action@v2
         with:         
           version: ${{ inputs.tag }}
-          env-name: prod
+          env-name: ${{ inputs.env-vars }}
           s3-bucket: factually-settled-boxer
           aws-region: us-east-1
           make-vars-for-deploy-target: ${{ env.deploy-flags }}
