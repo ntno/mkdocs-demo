@@ -3,8 +3,13 @@ name: Release
 
 on:
   workflow_dispatch:
-  release:
-    types: [ published ]
+    inputs:
+      tag:
+        required: true
+        type: string
+      perform-deploy:
+        required: true
+        type: boolean
 
 # These permissions are needed to interact with GitHub's OIDC Token endpoint.
 permissions:
@@ -12,18 +17,22 @@ permissions:
   contents: read
 
 jobs:
-  call-metadata-workflow:
-    uses: ./.github/workflows/meta.yml 
-    secrets: inherit 
-    with:
-      pr-prefix: "factually-settled-boxer-ci-pr-"
-  build-release:
-    needs: [call-metadata-workflow]
+  check-out-tag:
     runs-on: ubuntu-latest
-    environment: ci
     steps: 
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.tag }}
+  call-metadata-workflow:
+    needs: [check-out-tag]
+    uses: ./.github/workflows/meta.yml 
+    secrets: inherit 
+  build-release:
+    needs: [check-out-tag, call-metadata-workflow]
+    runs-on: ubuntu-latest
+    environment: ci
+    steps: 
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1     
       - name: Build Release
@@ -50,8 +59,8 @@ jobs:
       - name: Set Env Vars
         id: set-env-vars
         run: |
-          if [[ "${{ needs.call-metadata-workflow.outputs.release-is-prerelease }}" == "true" ]]; then
-              echo "Release is marked as prerelease, running deploy as dry-run..."
+          if [[ "${{ inputs.perform-deploy }}" == "false" ]]; then
+              echo "Deploy is disabled for current workflow run.  Setting dryrun flag..."
               echo "deploy-flags=DRY_RUN=1" >> $GITHUB_ENV
           else
               echo "deploy-flags=DRY_RUN=0" >> $GITHUB_ENV
@@ -68,10 +77,10 @@ jobs:
           role-to-assume: ${{ secrets.ROLE_ARN }}
       - name: Report Result
         run: |
-          if [[ "${{ needs.call-metadata-workflow.outputs.release-is-prerelease }}" == "true" ]]; then
-              export MESSAGE="Release ${{ needs.call-metadata-workflow.outputs.release-name }} is marked as prerelease, deployment skipped..."
-              echo "::notice title=Release Deploy Skipped::$MESSAGE"
+          if [[ "${{ inputs.perform-deploy }}" == "false" ]]; then
+              export MESSAGE="Deploy is disabled for current workflow run, deployment skipped..."
+              echo "::notice title=Deployment Skipped::$MESSAGE"
           else
-              export MESSAGE="Release ${{ needs.call-metadata-workflow.outputs.release-name }} deployed to http://factually-settled-boxer.s3-website.us-east-1.amazonaws.com with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
-              echo "::notice title=Release Deployed::$MESSAGE"
+              export MESSAGE="${{ inputs.tag }} deployed to http://factually-settled-boxer.s3-website.us-east-1.amazonaws.com with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
+              echo "::notice title=Deployment Complete::$MESSAGE"
           fi 
