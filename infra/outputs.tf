@@ -17,17 +17,25 @@ output "cd_role_info" {
   }
 }
 
-output "artifact_bucket_name" {
+output "artifact_bucket_info" {
   description = "artifact S3 bucket name"
-  value       = module.demo_site_cicd.artifacts_bucket_info.id
+  value = {
+    name = module.demo_site_cicd.artifacts_bucket_info.id
+  }
 }
 
-output "development_bucket_name" {
-  description = "development S3 bucket name"
-  value       = module.development_site_bucket.site_bucket_info.id
+output "development_bucket_info" {
+  description = "development site bucket name and website endpoint"
+  value = {
+    name             = module.development_site_bucket.site_bucket_info.id
+    website_endpoint = module.development_site_bucket.site_bucket_info.website_endpoint
+  }
 }
 
-output "production_bucket_name" {
-  description = "production S3 bucket name"
-  value       = module.production_site_bucket.site_bucket_info.id
+output "production_bucket_info" {
+  description = "production site bucket name and website endpoint"
+  value = {
+    name             = module.production_site_bucket.site_bucket_info.id
+    website_endpoint = module.production_site_bucket.site_bucket_info.website_endpoint
+  }
 }
