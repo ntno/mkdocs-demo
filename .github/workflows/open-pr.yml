@@ -36,7 +36,7 @@ jobs:
           echo "bucket-name=${{ needs.call-metadata-workflow.outputs.pr-env }}" >> $GITHUB_ENV
       - name: Create PR Environment
         id: create-pr-env
-        working-directory: ./ci
+        working-directory: ./.github/ci
         run: |
           echo "creating new environment for PR #${{ github.event.number }}"
           aws cloudformation create-stack \
