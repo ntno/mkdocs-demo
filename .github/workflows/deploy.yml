@@ -52,13 +52,13 @@ jobs:
         uses: ntno/build-mkdocs-composite-action@v3
         with:
           archive-enabled: true
-          version: ${{ inputs.tag }}
+          version: ${{ inputs.tag }}-${{ inputs.env-vars }}
           env-name: ${{ inputs.env-vars }}
           aws-region: us-east-1
           role-to-assume: ${{ secrets.ROLE_ARN }}
       - name: Report Result
         run: |
-          export MESSAGE="${{ inputs.tag }} built with ${{ needs.call-metadata-workflow.outputs.build-tag }}"
+          export MESSAGE="${{ inputs.tag }}-${{ inputs.env-vars }} built with ${{ needs.call-metadata-workflow.outputs.build-tag }}"
           echo "::notice title=Built MkDocs::$MESSAGE"
   deploy-mkdocs:
     needs: [call-metadata-workflow, build-mkdocs]
@@ -84,7 +84,7 @@ jobs:
         id: deploy-mkdocs
         uses: ntno/deploy-mkdocs-composite-action@v2
         with:         
-          version: ${{ inputs.tag }}
+          version: ${{ inputs.tag }}-${{ inputs.env-vars }}
           env-name: ${{ inputs.env-vars }}
           s3-bucket: factually-settled-boxer
           aws-region: us-east-1
@@ -96,6 +96,6 @@ jobs:
               export MESSAGE="Deploy is disabled for current workflow run, deployment skipped..."
               echo "::notice title=Deployment Skipped::$MESSAGE"
           else
-              export MESSAGE="${{ inputs.tag }} deployed to http://factually-settled-boxer.s3-website.us-east-1.amazonaws.com with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
+              export MESSAGE="${{ inputs.tag }}-${{ inputs.env-vars }} deployed to http://factually-settled-boxer.s3-website.us-east-1.amazonaws.com with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
               echo "::notice title=Deployment Complete::$MESSAGE"
           fi 
