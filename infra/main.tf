@@ -57,7 +57,6 @@ module "demo_site_cicd" {
   integration_environment = {
     environment_id = "integration"
     ci_prefix      = format("%s-%s-ci-pr-", var.github_org, var.github_repo)
-    # github_environment_name = "gh-ci"
     tags = {
       project-environment = "integration"
     }
@@ -65,15 +64,14 @@ module "demo_site_cicd" {
 
   deployment_environments = {
     "production" = {
-      github_environment_name = "gh-prod"
+      github_environment_name = "gh-prod" #setting github_environment_name restricts role assumption
       deploy_bucket           = local.site_name
       tags = {
         project-environment = "production"
       }
     },
     "development" = {
-      # github_environment_name = "gh-dev"
-      deploy_bucket         = local.dev_site_name
+      deploy_bucket = local.dev_site_name
       tags = {
         project-environment = "development"
       }
