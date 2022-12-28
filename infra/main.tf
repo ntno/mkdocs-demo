@@ -72,8 +72,8 @@ module "demo_site_cicd" {
       }
     },
     "development" = {
-      github_environment_name = "gh-dev"
-      deploy_bucket           = local.dev_site_name
+      # github_environment_name = "gh-dev"
+      deploy_bucket         = local.dev_site_name
       tags = {
         project-environment = "development"
       }
