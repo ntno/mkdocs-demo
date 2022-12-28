@@ -16,7 +16,7 @@ on:
           - dev
           - prod          
       perform-deploy:
-        description: 'Enables deployment to factually-settled-boxer-dev'
+        description: 'Enable deployment to factually-settled-boxer-dev'
         required: true
         type: boolean
 
