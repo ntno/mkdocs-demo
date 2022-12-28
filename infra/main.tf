@@ -47,7 +47,7 @@ locals {
 }
 
 module "demo_site_cicd" {
-  source = "git::https://github.com/ntno/tf-module-static-site-cicd?ref=refactor-for-multiple-deployment-environments"
+  source = "git::https://github.com/ntno/tf-module-static-site-cicd?ref=optional-github-environments"
 
   artifact_bucket_name = local.artifact_bucket_name
   github_repo          = var.github_repo
@@ -55,6 +55,7 @@ module "demo_site_cicd" {
   tags                 = local.global_tags
 
   integration_environment = {
+    environment_id          = "integration"
     ci_prefix               = format("%s-%s-ci-pr-", var.github_org, var.github_repo)
     github_environment_name = "gh-ci"
     tags = {

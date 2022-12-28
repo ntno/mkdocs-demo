@@ -1,14 +1,16 @@
 output "ci_role_info" {
-  description = "CI IAM Role ARN, prefix restriction, and github_environment_name"
+  description = "environment ID to map containing CI IAM Role ARN, prefix restriction, and github_environment_name"
   value = {
-    ci_role_arn             = module.demo_site_cicd.ci_role_info.arn
-    ci_prefix               = module.demo_site_cicd.ci_role_info.ci_prefix
-    github_environment_name = module.demo_site_cicd.ci_role_info.github_environment_name
+    for key, val in module.demo_site_cicd.ci_role_info : key => {
+      ci_role_arn             = val.arn
+      ci_prefix               = val.ci_prefix
+      github_environment_name = val.github_environment_name
+    }
   }
 }
 
 output "cd_role_info" {
-  description = "environment name to Map containing CD IAM Role's arn and associated github_environment_name"
+  description = "environment ID to map containing CD IAM Role's arn and associated github_environment_name"
   value = {
     for key, val in module.demo_site_cicd.cd_role_info : key => {
       cd_role_arn             = val.arn
