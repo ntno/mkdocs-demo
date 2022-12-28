@@ -1,5 +1,5 @@
 # Simple workflow for deploying mkdocs site 
-name: Deploy MkDocs to Development Environment
+name: Deploy MkDocs to Production Environment
 
 on:
   workflow_dispatch:
@@ -13,10 +13,10 @@ on:
         required: true
         type: choice
         options: 
+          - prod
           - dev
-          - prod          
       perform-deploy:
-        description: 'Enables deployment to factually-settled-boxer-dev'
+        description: 'Enables deployment to factually-settled-boxer'
         required: true
         type: boolean
 
@@ -64,8 +64,8 @@ jobs:
     needs: [call-metadata-workflow, build-mkdocs]
     runs-on: ubuntu-latest
     environment: 
-      name: gh-dev
-      url: http://factually-settled-boxer-dev.s3-website.us-east-1.amazonaws.com
+      name: gh-prod
+      url: http://factually-settled-boxer.s3-website.us-east-1.amazonaws.com
     steps:
       - name: Checkout
         uses: actions/checkout@v3
