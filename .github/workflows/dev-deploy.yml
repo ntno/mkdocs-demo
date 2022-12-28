@@ -1,6 +1,9 @@
 # Simple workflow for deploying mkdocs site 
 name: Deploy MkDocs to Development Environment
 
+env:
+  deployment-url: http://factually-settled-boxer-dev.s3-website.us-east-1.amazonaws.com
+
 on:
   workflow_dispatch:
     inputs:
@@ -65,7 +68,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: gh-dev
-      url: http://factually-settled-boxer-dev.s3-website.us-east-1.amazonaws.com
+      url: ${{ env.deployment-url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -98,6 +101,6 @@ jobs:
               export MESSAGE="Deploy is disabled for current workflow run, deployment skipped..."
               echo "::notice title=Deployment Skipped::$MESSAGE"
           else
-              export MESSAGE="${{ inputs.tag }}/${{ inputs.env-vars }} deployed to ${{ jobs.deploy-mkdocs.environment.url }} with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
+              export MESSAGE="${{ inputs.tag }}/${{ inputs.env-vars }} deployed to ${{ env.deployment-url }} with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
               echo "::notice title=Deployment Complete::$MESSAGE"
           fi 
