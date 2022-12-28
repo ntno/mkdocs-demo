@@ -30,11 +30,12 @@ ex: run server with ['prod/us-east-1'](variables.yml#L21-L25) site variables
 - set up OIDC provider in AWS console
    - [Use OpenID Connect within your workflows to authenticate with Amazon Web Services.](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
 - create S3 bucket for static website hosting 
-- create [supporting cicd resources](https://github.com/ntno/tf-module-static-site-cicd)
+- create supporting cicd resources (S3 bucket for site artifacts and IAM roles for GitHub Action workflows to assume)
+
 
 ### infrastructure (onetime setup)
 
-see terraform code in [infra/](infra/) for example on how to create required resources
+see terraform code in [`infra/`](infra/) for example on how to create required resources.  [`ntno/tf-module-static-site-cicd`](https://github.com/ntno/tf-module-static-site-cicd) is used to create CICD IAM roles and artifact bucket.
 
 ```
 make ubuntu
