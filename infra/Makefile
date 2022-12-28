@@ -21,7 +21,7 @@ clean:
 	rm -rf .terraform
 	rm -rf .tfplan
 
-plan: check-env check-region validate
+plan: check-env check-region init validate
 	export "AWS_REGION=$(region)" && \
 	export "TF_VAR_region=$(region)" && \
 	terraform plan -out=$(env).tfplan -state="$(terraform-backend-key)"

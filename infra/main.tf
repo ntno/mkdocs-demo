@@ -47,7 +47,7 @@ locals {
 }
 
 module "demo_site_cicd" {
-  source = "git::https://github.com/ntno/tf-module-static-site-cicd?ref=optional-github-environments"
+  source = "git::https://github.com/ntno/tf-module-static-site-cicd?ref=0.0.0"
 
   artifact_bucket_name = local.artifact_bucket_name
   github_repo          = var.github_repo
