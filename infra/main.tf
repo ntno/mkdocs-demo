@@ -46,50 +46,17 @@ locals {
   }
 }
 
-# module "demo_site_cicd" {
-#   source = "git::https://github.com/ntno/tf-module-static-site-cicd?ref=optional-github-environments"
-
-#   artifact_bucket_name = local.artifact_bucket_name
-#   github_repo          = var.github_repo
-#   github_org           = var.github_org
-#   tags                 = local.global_tags
-
-#   integration_environment = {
-#     environment_id = "integration"
-#     ci_prefix      = format("%s-%s-ci-pr-", var.github_org, var.github_repo)
-#     tags = {
-#       project-environment = "integration"
-#     }
-#   }
-
-#   deployment_environments = {
-#     "production" = {
-#       github_environment_name = "gh-prod" #setting github_environment_name restricts role assumption
-#       deploy_bucket           = local.site_name
-#       tags = {
-#         project-environment = "production"
-#       }
-#     },
-#     "development" = {
-#       deploy_bucket = local.dev_site_name
-#       tags = {
-#         project-environment = "development"
-#       }
-#     }
-#   }
-# }
-
 module "demo_site_cicd" {
   source = "git::https://github.com/ntno/tf-module-static-site-cicd?ref=optional-github-environments"
 
-  artifact_bucket_name = "factually-settled-boxer-artifacts"
-  github_org           = "ntno"
-  github_repo          = "mkdocs-demo"
+  artifact_bucket_name = local.artifact_bucket_name
+  github_repo          = var.github_repo
+  github_org           = var.github_org
   tags                 = local.global_tags
 
   integration_environment = {
     environment_id = "integration"
-    ci_prefix      = format("%s-%s-ci-pr-", "ntno", "mkdocs-demo")
+    ci_prefix      = format("%s-%s-ci-pr-", var.github_org, var.github_repo)
     tags = {
       project-environment = "integration"
     }
@@ -97,17 +64,48 @@ module "demo_site_cicd" {
 
   deployment_environments = {
     "production" = {
-      github_environment_name = "gh-prod" #setting github_environment_name restricts role assumption
-      deploy_bucket           = "factually-settled-boxer"
+      deploy_bucket = local.site_name
       tags = {
         project-environment = "production"
       }
     },
     "development" = {
-      deploy_bucket = "factually-settled-boxer-development"
+      deploy_bucket = local.dev_site_name
       tags = {
         project-environment = "development"
       }
     }
   }
+}
+
+# module "demo_site_cicd" {
+#   source = "git::https://github.com/ntno/tf-module-static-site-cicd?ref=optional-github-environments"
+
+#   artifact_bucket_name = "factually-settled-boxer-artifacts"
+#   github_org           = "ntno"
+#   github_repo          = "mkdocs-demo"
+#   tags                 = local.global_tags
+
+#   integration_environment = {
+#     environment_id = "integration"
+#     ci_prefix      = format("%s-%s-ci-pr-", "ntno", "mkdocs-demo")
+#     tags = {
+#       project-environment = "integration"
+#     }
+#   }
+
+#   deployment_environments = {
+#     "production" = {
+#       deploy_bucket = "factually-settled-boxer"
+#       tags = {
+#         project-environment = "production"
+#       }
+#     },
+#     "development" = {
+#       deploy_bucket = "factually-settled-boxer-development"
+#       tags = {
+#         project-environment = "development"
+#       }
+#     }
+#   }
 }
