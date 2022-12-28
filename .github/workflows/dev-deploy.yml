@@ -1,5 +1,5 @@
 # Simple workflow for deploying mkdocs site 
-name: Deploy MkDocs
+name: Deploy MkDocs to Development Environment
 
 on:
   workflow_dispatch:
@@ -15,14 +15,8 @@ on:
         options: 
           - prod
           - dev
-      deploy-bucket:
-        required: true
-        type: choice
-        options: 
-          - factually-settled-boxer
-          - factually-settled-boxer-dev
       perform-deploy:
-        description: 'Enables deployment to factually-settled-boxer'
+        description: 'Enables deployment to factually-settled-boxer-dev'
         required: true
         type: boolean
 
@@ -69,7 +63,9 @@ jobs:
   deploy-mkdocs:
     needs: [call-metadata-workflow, build-mkdocs]
     runs-on: ubuntu-latest
-    environment: gh-prod
+    environment: 
+      name: gh-dev
+      url: http://factually-settled-boxer-dev.s3-website.us-east-1.amazonaws.com
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -92,7 +88,7 @@ jobs:
         with:         
           version: ${{ inputs.tag }}/${{ inputs.env-vars }}
           env-name: ${{ inputs.env-vars }}
-          s3-bucket: ${{ inputs.deploy-bucket }}
+          s3-bucket: ${{ secrets.DEPLOY_TARGET }}
           aws-region: us-east-1
           make-vars-for-deploy-target: ${{ env.deploy-flags }}
           role-to-assume: ${{ secrets.ROLE_ARN }}
@@ -102,6 +98,6 @@ jobs:
               export MESSAGE="Deploy is disabled for current workflow run, deployment skipped..."
               echo "::notice title=Deployment Skipped::$MESSAGE"
           else
-              export MESSAGE="${{ inputs.tag }}/${{ inputs.env-vars }} deployed to http://${{ inputs.deploy-bucket }}.s3-website.us-east-1.amazonaws.com with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
+              export MESSAGE="${{ inputs.tag }}/${{ inputs.env-vars }} deployed to ${{ jobs.deploy-mkdocs.environment.url }} with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
               echo "::notice title=Deployment Complete::$MESSAGE"
           fi 
