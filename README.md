@@ -40,7 +40,7 @@ ex: run server with ['prod/us-east-1'](variables.yml#L21-L25) site variables
 
 ### infrastructure (onetime setup)
 
-see terraform code in [`infra/`](infra/) for example on how to create required resources.  [`ntno/tf-module-static-site-cicd`](https://github.com/ntno/tf-module-static-site-cicd){target="_blank"} is used to create CICD IAM roles and artifact bucket.
+see terraform code in [`infra/`](infra/) for example on how to create required resources.  [`ntno/tf-module-static-site-cicd`](https://github.com/ntno/tf-module-static-site-cicd) is used to create CICD IAM roles and artifact bucket.
 
 ```
 make ubuntu
