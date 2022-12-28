@@ -22,7 +22,6 @@ module "production_site_bucket" {
   source      = "./modules/simple-site-bucket"
   bucket_name = local.site_name
   tags = merge(local.global_tags, {
-    tf-module           = "ntno/mkdocs-demo/modules/simple-site-bucket"
     project-environment = "production"
   })
 }
@@ -31,7 +30,6 @@ module "development_site_bucket" {
   source      = "./modules/simple-site-bucket"
   bucket_name = local.dev_site_name
   tags = merge(local.global_tags, {
-    tf-module           = "ntno/mkdocs-demo/modules/simple-site-bucket"
     project-environment = "development"
   })
 }
@@ -54,7 +52,7 @@ module "demo_site_cicd" {
   artifact_bucket_name = local.artifact_bucket_name
   github_repo          = var.github_repo
   github_org           = var.github_org
-  tags                 = merge(local.global_tags, { tf-module = "ntno/tf-module-static-site-cicd" })
+  tags                 = local.global_tags
 
   integration_environment = {
     environment_id = "integration"
