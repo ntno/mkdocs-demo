@@ -55,9 +55,9 @@ module "demo_site_cicd" {
   tags                 = local.global_tags
 
   integration_environment = {
-    environment_id          = "integration"
-    ci_prefix               = format("%s-%s-ci-pr-", var.github_org, var.github_repo)
-    github_environment_name = "gh-ci"
+    environment_id = "integration"
+    ci_prefix      = format("%s-%s-ci-pr-", var.github_org, var.github_repo)
+    # github_environment_name = "gh-ci"
     tags = {
       project-environment = "integration"
     }
