@@ -1,22 +1,41 @@
-output "account_id" {
-  value = data.aws_caller_identity.current.account_id
-}
-
-output "ci_role_arn" {
-  description = "CI IAM Role ARN"
-  value       = module.demo_site_ci_cd.ci_role_arn
-}
-
-output "cd_role_arn" {
-  description = "CD IAM Role ARN"
-  value       = module.demo_site_ci_cd.cd_role_arn
-}
-
-output "site_bucket_info" {
-  description = "Map containing the site bucket's arn, id, and website endpoint"
+output "ci_role_info" {
+  description = "CI IAM Role ARN, prefix restriction, and github_environment_name"
   value = {
-    "arn"              = aws_s3_bucket.site_bucket.arn
-    "id"               = aws_s3_bucket.site_bucket.id
-    "website_endpoint" = aws_s3_bucket_website_configuration.site_bucket_website_configuration.website_endpoint
+    ci_role_arn             = module.demo_site_cicd.ci_role_info.arn
+    ci_prefix               = module.demo_site_cicd.ci_role_info.ci_prefix
+    github_environment_name = module.demo_site_cicd.ci_role_info.github_environment_name
+  }
+}
+
+output "cd_role_info" {
+  description = "environment name to Map containing CD IAM Role's arn and associated github_environment_name"
+  value = {
+    for key, val in module.demo_site_cicd.cd_role_info : key => {
+      cd_role_arn             = val.arn
+      github_environment_name = val.github_environment_name
+    }
+  }
+}
+
+output "artifact_bucket_info" {
+  description = "artifact S3 bucket name"
+  value = {
+    name = module.demo_site_cicd.artifacts_bucket_info.id
+  }
+}
+
+output "development_bucket_info" {
+  description = "development site bucket name and website endpoint"
+  value = {
+    name             = module.development_site_bucket.site_bucket_info.id
+    website_endpoint = module.development_site_bucket.site_bucket_info.website_endpoint
+  }
+}
+
+output "production_bucket_info" {
+  description = "production site bucket name and website endpoint"
+  value = {
+    name             = module.production_site_bucket.site_bucket_info.id
+    website_endpoint = module.production_site_bucket.site_bucket_info.website_endpoint
   }
 }
