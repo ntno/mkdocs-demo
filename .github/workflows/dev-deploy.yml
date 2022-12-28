@@ -2,8 +2,8 @@
 name: Deploy MkDocs to Development Environment
 
 env:
-  deploy-target: factually-settled-boxer-dev
-  deployment-url: http://factually-settled-boxer-dev.s3-website.us-east-1.amazonaws.com
+  deploy-target: factually-settled-boxer-development
+  deployment-url: http://factually-settled-boxer-development.s3-website.us-east-1.amazonaws.com
 
 on:
   workflow_dispatch:
@@ -20,7 +20,7 @@ on:
           - dev
           - prod          
       perform-deploy:
-        description: 'Enable deployment to factually-settled-boxer-dev'
+        description: 'Enable deployment to factually-settled-boxer-development'
         required: true
         type: boolean
 
