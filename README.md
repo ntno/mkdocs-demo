@@ -1,5 +1,5 @@
 # mkdocs-demo
-mkdocs demo site  
+Example project for creating/deploying a MkDocs website with GitHub Actions.  
 
 ## live environments
 ### integration
