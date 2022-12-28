@@ -26,14 +26,15 @@ ex: run server with ['prod/us-east-1'](variables.yml#L21-L25) site variables
 `make serve env=prod region=us-east-1` 
 
 ## prerequisites
-- docker
+- install docker and Make (for local development)
 - set up OIDC provider in AWS console
    - [Use OpenID Connect within your workflows to authenticate with Amazon Web Services.](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
-- create site and supporting cicd infrastructure
+- create S3 bucket for static website hosting 
+- create [supporting cicd resources](https://github.com/ntno/tf-module-static-site-cicd)
 
-### infrastructure (one-time set up)
-- creates development and production site buckets  
-- creates IAM roles to support github action workflows
+### infrastructure (onetime setup)
+
+see terraform code in [infra/](infra/) for example on how to create required resources
 
 ```
 make ubuntu
@@ -42,3 +43,5 @@ make plan
 make apply
 ```
 
+- creates development and production site buckets  
+- creates IAM roles to support github action workflows
