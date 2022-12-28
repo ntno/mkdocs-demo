@@ -1,6 +1,10 @@
 # Simple workflow for deploying mkdocs site 
 name: Deploy MkDocs to Development Environment
 
+env:
+  deploy-target: factually-settled-boxer-development
+  deployment-url: http://factually-settled-boxer-development.s3-website.us-east-1.amazonaws.com
+
 on:
   workflow_dispatch:
     inputs:
@@ -16,7 +20,7 @@ on:
           - dev
           - prod          
       perform-deploy:
-        description: 'Enables deployment to factually-settled-boxer-dev'
+        description: 'Enable deployment to factually-settled-boxer-development'
         required: true
         type: boolean
 
@@ -65,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: 
       name: gh-dev
-      url: http://factually-settled-boxer-dev.s3-website.us-east-1.amazonaws.com
+      url: ${{ env.deployment-url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -88,7 +92,7 @@ jobs:
         with:         
           version: ${{ inputs.tag }}/${{ inputs.env-vars }}
           env-name: ${{ inputs.env-vars }}
-          s3-bucket: ${{ secrets.DEPLOY_TARGET }}
+          s3-bucket: ${{ env.deploy-target }}
           aws-region: us-east-1
           make-vars-for-deploy-target: ${{ env.deploy-flags }}
           role-to-assume: ${{ secrets.ROLE_ARN }}
@@ -98,6 +102,6 @@ jobs:
               export MESSAGE="Deploy is disabled for current workflow run, deployment skipped..."
               echo "::notice title=Deployment Skipped::$MESSAGE"
           else
-              export MESSAGE="${{ inputs.tag }}/${{ inputs.env-vars }} deployed to ${{ jobs.deploy-mkdocs.environment.url }} with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
+              export MESSAGE="${{ inputs.tag }}/${{ inputs.env-vars }} deployed to ${{ env.deployment-url }} with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
               echo "::notice title=Deployment Complete::$MESSAGE"
           fi 
