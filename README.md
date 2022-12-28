@@ -7,7 +7,7 @@ temporary environments are created/destroyed with pull request open/close
 
 url: posted to the pull request for review  
 status:   
-   [![Test Pull Request](https://github.com/ntno/mkdocs-demo/actions/workflows/test-pr.yml/badge.svg?event=pull_request)](https://github.com/ntno/mkdocs-demo/actions/workflows/test-pr.yml)
+   [![Test Pull Request](https://github.com/ntno/mkdocs-demo/actions/workflows/test-pr.yml/badge.svg)](https://github.com/ntno/mkdocs-demo/actions/workflows/test-pr.yml)
 
 ### development
 url: [http://factually-settled-boxer-development.s3-website-us-east-1.amazonaws.com](http://factually-settled-boxer-development.s3-website-us-east-1.amazonaws.com)  
