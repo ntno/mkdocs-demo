@@ -14,7 +14,6 @@ deployment workflow: (todo)
 url: [http://factually-settled-boxer.s3-website-us-east-1.amazonaws.com](http://factually-settled-boxer.s3-website-us-east-1.amazonaws.com)  
 deployment workflow: (todo)
 
-
 ## local development
 
 ex: run server with ['dev/local'](variables.yml#L9-L12) site variables  
@@ -32,7 +31,7 @@ ex: run server with ['prod/us-east-1'](variables.yml#L21-L25) site variables
    - [Use OpenID Connect within your workflows to authenticate with Amazon Web Services.](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services)
 - create site and supporting cicd infrastructure
 
-## infrastructure (one-time set up)
+### infrastructure (one-time set up)
 - creates development and production site buckets  
 - creates IAM roles to support github action workflows
 
