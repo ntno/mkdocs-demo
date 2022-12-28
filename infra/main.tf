@@ -77,35 +77,3 @@ module "demo_site_cicd" {
     }
   }
 }
-
-# module "demo_site_cicd" {
-#   source = "git::https://github.com/ntno/tf-module-static-site-cicd?ref=optional-github-environments"
-
-#   artifact_bucket_name = "factually-settled-boxer-artifacts"
-#   github_org           = "ntno"
-#   github_repo          = "mkdocs-demo"
-#   tags                 = local.global_tags
-
-#   integration_environment = {
-#     environment_id = "integration"
-#     ci_prefix      = format("%s-%s-ci-pr-", "ntno", "mkdocs-demo")
-#     tags = {
-#       project-environment = "integration"
-#     }
-#   }
-
-#   deployment_environments = {
-#     "production" = {
-#       deploy_bucket = "factually-settled-boxer"
-#       tags = {
-#         project-environment = "production"
-#       }
-#     },
-#     "development" = {
-#       deploy_bucket = "factually-settled-boxer-development"
-#       tags = {
-#         project-environment = "development"
-#       }
-#     }
-#   }
-}
