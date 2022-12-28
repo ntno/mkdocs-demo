@@ -2,6 +2,7 @@
 name: Deploy MkDocs to Production Environment
 
 env: 
+  deploy-target: factually-settled-boxer
   deployment-url: http://factually-settled-boxer.s3-website.us-east-1.amazonaws.com
 
 on:
@@ -91,7 +92,7 @@ jobs:
         with:         
           version: ${{ inputs.tag }}/${{ inputs.env-vars }}
           env-name: ${{ inputs.env-vars }}
-          s3-bucket: ${{ secrets.DEPLOY_TARGET }}
+          s3-bucket: ${{ env.deploy-target }}
           aws-region: us-east-1
           make-vars-for-deploy-target: ${{ env.deploy-flags }}
           role-to-assume: ${{ secrets.ROLE_ARN }}
