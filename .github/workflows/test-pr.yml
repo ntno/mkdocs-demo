@@ -20,7 +20,6 @@ jobs:
   build-pr:
     needs: [call-metadata-workflow]
     runs-on: ubuntu-latest
-    environment: gh-ci
     steps: 
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,7 +32,7 @@ jobs:
           version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
           env-name: dev
           aws-region: us-east-1
-          role-to-assume: ${{ secrets.ROLE_ARN }}
+          role-to-assume: ${{ secrets.INTEGRATION_IAM_ROLE_ARN }}
       - name: Report Result
         run: |
           export MESSAGE="PR #${{ needs.call-metadata-workflow.outputs.pr-number }} built with version=${{ needs.call-metadata-workflow.outputs.build-tag }}"
@@ -41,7 +40,6 @@ jobs:
   deploy-pr:
     needs: [call-metadata-workflow, build-pr]
     runs-on: ubuntu-latest
-    environment: gh-ci
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -55,7 +53,7 @@ jobs:
           env-name: dev
           s3-bucket: ${{ needs.call-metadata-workflow.outputs.pr-env }}
           aws-region: us-east-1
-          role-to-assume: ${{ secrets.ROLE_ARN }}
+          role-to-assume: ${{ secrets.INTEGRATION_IAM_ROLE_ARN }}
       - name: Report Result
         run: |
           export MESSAGE="PR #${{ needs.call-metadata-workflow.outputs.pr-number }} deployed to  http://${{ needs.call-metadata-workflow.outputs.pr-env }}.s3-website.us-east-1.amazonaws.com with version=${{ needs.call-metadata-workflow.outputs.build-tag }}"        

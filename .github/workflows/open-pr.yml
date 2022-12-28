@@ -20,7 +20,6 @@ jobs:
   create-pr-environment:
     needs: [call-metadata-workflow]
     runs-on: ubuntu-latest
-    environment: gh-ci
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -28,7 +27,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: us-east-1
-          role-to-assume: ${{ secrets.ROLE_ARN }}
+          role-to-assume: ${{ secrets.INTEGRATION_IAM_ROLE_ARN }}
       - name: Set Env Vars
         id: set-env-vars
         run: |
