@@ -44,7 +44,6 @@ jobs:
   build-mkdocs:
     needs: [check-out-tag, call-metadata-workflow]
     runs-on: ubuntu-latest
-    environment: gh-ci
     steps: 
       - name: Checkout
         uses: actions/checkout@v3
@@ -59,7 +58,7 @@ jobs:
           version: ${{ inputs.tag }}/${{ inputs.env-vars }}
           env-name: ${{ inputs.env-vars }}
           aws-region: us-east-1
-          role-to-assume: ${{ secrets.ROLE_ARN }}
+          role-to-assume: ${{ secrets.DEVELOPMENT_IAM_ROLE_ARN }}
       - name: Report Result
         run: |
           export MESSAGE="${{ inputs.tag }}/${{ inputs.env-vars }} built with ${{ needs.call-metadata-workflow.outputs.build-tag }}"
@@ -67,9 +66,6 @@ jobs:
   deploy-mkdocs:
     needs: [call-metadata-workflow, build-mkdocs]
     runs-on: ubuntu-latest
-    environment: 
-      name: gh-dev
-      url: ${{ env.deployment-url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -95,7 +91,7 @@ jobs:
           s3-bucket: ${{ env.deploy-target }}
           aws-region: us-east-1
           make-vars-for-deploy-target: ${{ env.deploy-flags }}
-          role-to-assume: ${{ secrets.ROLE_ARN }}
+          role-to-assume: ${{ secrets.DEVELOPMENT_IAM_ROLE_ARN }}
       - name: Report Result
         run: |
           if [[ "${{ inputs.perform-deploy }}" == "false" ]]; then
