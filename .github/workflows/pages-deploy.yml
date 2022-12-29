@@ -1,0 +1,92 @@
+# Simple workflow for deploying mkdocs site 
+name: Deploy MkDocs to GitHub Pages
+
+env:
+  gh-pages-url: https://ntno.github.io/ntno.net
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to deploy'
+        required: true
+        type: string
+      env-vars:
+        description: 'Environment Variables to load'
+        required: true
+        type: choice
+        options: 
+          - dev
+          - prod          
+
+# These permissions are needed to interact with GitHub's OIDC Token endpoint.
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  check-out-tag:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.tag }}
+  call-metadata-workflow:
+    needs: [check-out-tag]
+    uses: ./.github/workflows/meta.yml 
+    secrets: inherit 
+  build-mkdocs:
+    needs: [check-out-tag, call-metadata-workflow]
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.tag }}
+      - name: Install Buildenv
+        uses: ntno/setup-buildenv@v1     
+      - name: Build MkDocs
+        uses: ntno/build-mkdocs-composite-action@v3
+        with:
+          archive-enabled: true
+          version: ${{ inputs.tag }}/${{ inputs.env-vars }}
+          env-name: ${{ inputs.env-vars }}
+          aws-region: us-east-1
+          role-to-assume: ${{ secrets.DEVELOPMENT_IAM_ROLE_ARN }}
+      - name: Report Result
+        run: |
+          export MESSAGE="${{ inputs.tag }}/${{ inputs.env-vars }} built with ${{ needs.call-metadata-workflow.outputs.build-tag }}"
+          echo "::notice title=Built MkDocs::$MESSAGE"
+  deploy-mkdocs:
+    needs: [call-metadata-workflow, build-mkdocs]
+    runs-on: ubuntu-latest
+    environment: gh-ci
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ inputs.tag }}
+      - name: Install Buildenv      
+        uses: ntno/setup-buildenv@v1
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-region: us-east-2
+          role-to-assume: ${{ secrets.ROLE_ARN }}
+      - name: Get Site Artifact
+        run: |
+          make get-mkdocs-archive env=prod region=us-east-2 version=${{ inputs.tag }} download-directory="$RUNNER_TEMP/"
+          ls -ltra ./site
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+      - name: Report Result
+        run: |
+          export MESSAGE="${{ inputs.tag }} deployed to ${{ env.gh-pages-url }} with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
+          echo "::notice title=Preproduction Deployment Complete::$MESSAGE"
