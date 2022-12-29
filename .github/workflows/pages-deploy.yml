@@ -2,7 +2,7 @@
 name: Deploy MkDocs to GitHub Pages
 
 env:
-  gh-pages-url: https://ntno.github.io/ntno.net
+  gh-pages-url: https://ntno.github.io/mkdocs-demo
 
 on:
   workflow_dispatch:
@@ -61,7 +61,6 @@ jobs:
   deploy-mkdocs:
     needs: [call-metadata-workflow, build-mkdocs]
     runs-on: ubuntu-latest
-    environment: gh-ci
     permissions:
       id-token: write
       contents: write
@@ -76,7 +75,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-region: us-east-2
-          role-to-assume: ${{ secrets.ROLE_ARN }}
+          role-to-assume: ${{ secrets.DEVELOPMENT_IAM_ROLE_ARN }}
       - name: Get Site Artifact
         run: |
           make get-mkdocs-archive env=prod region=us-east-2 version=${{ inputs.tag }} download-directory="$RUNNER_TEMP/"
