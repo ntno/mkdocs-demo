@@ -78,7 +78,7 @@ jobs:
           role-to-assume: ${{ secrets.DEVELOPMENT_IAM_ROLE_ARN }}
       - name: Get Site Artifact
         run: |
-          make get-mkdocs-archive env=prod region=us-east-2 version=${{ inputs.tag }} download-directory="$RUNNER_TEMP/"
+          make get-mkdocs-archive env=prod region=us-east-2 version=${{ inputs.tag }}/${{ inputs.env-vars }} download-directory="$RUNNER_TEMP/"
           ls -ltra ./site
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -87,5 +87,5 @@ jobs:
           publish_dir: ./site
       - name: Report Result
         run: |
-          export MESSAGE="${{ inputs.tag }} deployed to ${{ env.gh-pages-url }} with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
+          export MESSAGE="${{ inputs.tag }}/${{ inputs.env-vars }} deployed to ${{ env.gh-pages-url }} with ${{ needs.call-metadata-workflow.outputs.build-tag }}"        
           echo "::notice title=Preproduction Deployment Complete::$MESSAGE"
