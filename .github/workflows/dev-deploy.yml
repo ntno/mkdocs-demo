@@ -63,7 +63,7 @@ jobs:
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1     
       - name: Build MkDocs
-        uses: ntno/build-mkdocs-composite-action@refactor-pip
+        uses: ntno/build-mkdocs-composite-action@v4-alpha
         with:
           archive-enabled: true
           version: ${{ inputs.tag }}/${{ inputs.env-vars }}
