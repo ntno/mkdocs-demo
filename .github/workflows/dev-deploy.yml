@@ -105,8 +105,7 @@ jobs:
       
           echo "deploy-flags=${DRY_RUN} ${SIZE_ONLY_RUN} ${QUIET_RUN}"
           echo "deploy-flags=${DRY_RUN} ${SIZE_ONLY_RUN} ${QUIET_RUN}" >> $GITHUB_ENV
-          echo $GITHUB_ENV
-          echo "$GITHUB_ENV"
+          cat $GITHUB_ENV
       - name: Deploy MkDocs
         id: deploy-mkdocs
         uses: ntno/deploy-mkdocs-composite-action@v2
