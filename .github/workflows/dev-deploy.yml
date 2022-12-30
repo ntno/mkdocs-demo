@@ -20,17 +20,17 @@ on:
           - dev
           - prod          
       enable-dry-run:
-        description: '--dryrun S3 sync to target'
+        description: '--dryrun sync to target'
         default: false
         required: true
         type: boolean
       enable-size-only-run:
-        description: '--size-only S3 sync to target'
+        description: '--size-only sync to target'
         default: false
         required: true
         type: boolean
       enable-quiet-run:
-        description: '--quiet S3 sync to target'
+        description: '--quiet sync to target'
         default: false
         required: true
         type: boolean
@@ -103,12 +103,7 @@ jobs:
               export QUIET_RUN="QUIET=0"
           fi 
       
-          echo "deploy-flags=${DRY_RUN} ${SIZE_ONLY_RUN} ${QUIET_RUN}"
           echo "deploy-flags=${DRY_RUN} ${SIZE_ONLY_RUN} ${QUIET_RUN}" >> $GITHUB_OUTPUT
-          echo $GITHUB_ENV
-          cat $GITHUB_ENV
-          echo 
-          cat $GITHUB_OUTPUT
       - name: Deploy MkDocs
         id: deploy-mkdocs
         uses: ntno/deploy-mkdocs-composite-action@v2
