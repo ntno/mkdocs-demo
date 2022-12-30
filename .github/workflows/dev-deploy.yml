@@ -92,12 +92,12 @@ jobs:
           else
               export DRY_RUN="DRY_RUN=0"
           fi   
-          if [[ "${{ inputs.size-only-run }}" == "true" ]]; then
+          if [[ "${{ inputs.enable-size-only-run }}" == "true" ]]; then
               export SIZE_ONLY_RUN="SIZE_ONLY_SYNC=1"
           else
               export SIZE_ONLY_RUN="SIZE_ONLY_SYNC=0"
           fi  
-          if [[ "${{ inputs.quiet-run }}" == "true" ]]; then
+          if [[ "${{ inputs.enable-quiet-run }}" == "true" ]]; then
               export QUIET_RUN="QUIET=1"
           else
               export QUIET_RUN="QUIET=0"
