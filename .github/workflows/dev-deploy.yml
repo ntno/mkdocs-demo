@@ -20,17 +20,17 @@ on:
           - dev
           - prod          
       enable-dry-run:
-        description: 'If checked, sync to factually-settled-boxer-development S3 bucket run with --dryrun flag'
+        description: 'sync to target S3 bucket run with --dryrun flag'
         default: false
         required: true
         type: boolean
       enable-size-only-run:
-        description: 'If checked, sync to factually-settled-boxer-development S3 bucket run with --size-only flag'
+        description: 'sync to target S3 bucket run with --size-only flag'
         default: false
         required: true
         type: boolean
       enable-quiet-run:
-        description: 'If checked, sync to factually-settled-boxer-development S3 bucket run with --quiet flag'
+        description: 'sync to target S3 bucket run with --quiet flag'
         default: false
         required: true
         type: boolean
