@@ -20,17 +20,17 @@ on:
           - dev
           - prod          
       enable-dry-run:
-        description: 'sync to target S3 bucket run with --dryrun flag'
+        description: '--dryrun S3 sync to target'
         default: false
         required: true
         type: boolean
       enable-size-only-run:
-        description: 'sync to target S3 bucket run with --size-only flag'
+        description: '--size-only S3 sync to target'
         default: false
         required: true
         type: boolean
       enable-quiet-run:
-        description: 'sync to target S3 bucket run with --quiet flag'
+        description: '--quiet S3 sync to target'
         default: false
         required: true
         type: boolean
