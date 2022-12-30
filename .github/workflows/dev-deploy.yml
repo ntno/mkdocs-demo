@@ -104,8 +104,11 @@ jobs:
           fi 
       
           echo "deploy-flags=${DRY_RUN} ${SIZE_ONLY_RUN} ${QUIET_RUN}"
-          echo "deploy-flags=${DRY_RUN} ${SIZE_ONLY_RUN} ${QUIET_RUN}" >> $GITHUB_ENV
+          echo "deploy-flags=${DRY_RUN} ${SIZE_ONLY_RUN} ${QUIET_RUN}" >> $GITHUB_OUTPUT
+          echo $GITHUB_ENV
           cat $GITHUB_ENV
+          echo 
+          cat $GITHUB_OUTPUT
       - name: Deploy MkDocs
         id: deploy-mkdocs
         uses: ntno/deploy-mkdocs-composite-action@v2
@@ -114,7 +117,7 @@ jobs:
           env-name: ${{ inputs.env-vars }}
           s3-bucket: ${{ env.deploy-target }}
           aws-region: us-east-1
-          make-vars-for-deploy-target: ${{ env.deploy-flags }}
+          make-vars-for-deploy-target: ${{ steps.set-env-vars.outputs.deploy-flags }}
           role-to-assume: ${{ secrets.DEVELOPMENT_IAM_ROLE_ARN }}
       - name: Report Result
         run: |

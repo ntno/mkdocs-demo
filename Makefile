@@ -68,8 +68,9 @@ troubleshoot:
 	echo $(DRY_RUN_FLAG)
 	echo $(QUIET_FLAG)
 	echo $(SIZE_ONLY_FLAG)
-	
-deploy-mkdocs: check-env check-region check-bucket-name troubleshoot
+
+deploy-mkdocs: check-env check-region check-bucket-name 
+	$(MAKE) troubleshoot
 	aws s3 sync $(DRY_RUN_FLAG) $(QUIET_FLAG) $(SIZE_ONLY_FLAG) --no-progress --sse AES256 --acl public-read ./site/ s3://$(bucket-name)/
 
 serve-mkdocs: check-env check-region clean install-requirements
