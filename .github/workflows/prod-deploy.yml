@@ -19,8 +19,19 @@ on:
         options: 
           - prod
           - dev
-      perform-deploy:
-        description: 'Enable deployment to factually-settled-boxer'
+      enable-dry-run:
+        description: '--dryrun sync to target'
+        default: false
+        required: true
+        type: boolean
+      enable-size-only-run:
+        description: '--size-only sync to target'
+        default: false
+        required: true
+        type: boolean
+      enable-quiet-run:
+        description: '--quiet sync to target'
+        default: false
         required: true
         type: boolean
 
@@ -76,12 +87,23 @@ jobs:
       - name: Set Env Vars
         id: set-env-vars
         run: |
-          if [[ "${{ inputs.perform-deploy }}" == "false" ]]; then
-              echo "Deploy is disabled for current workflow run.  Setting dryrun flag..."
-              echo "deploy-flags=DRY_RUN=1" >> $GITHUB_ENV
+          if [[ "${{ inputs.enable-dry-run }}" == "true" ]]; then
+              export DRY_RUN="DRY_RUN=1"
           else
-              echo "deploy-flags=DRY_RUN=0" >> $GITHUB_ENV
+              export DRY_RUN="DRY_RUN=0"
           fi   
+          if [[ "${{ inputs.enable-size-only-run }}" == "true" ]]; then
+              export SIZE_ONLY_RUN="SIZE_ONLY_SYNC=1"
+          else
+              export SIZE_ONLY_RUN="SIZE_ONLY_SYNC=0"
+          fi  
+          if [[ "${{ inputs.enable-quiet-run }}" == "true" ]]; then
+              export QUIET_RUN="QUIET=1"
+          else
+              export QUIET_RUN="QUIET=0"
+          fi 
+      
+          echo "deploy-flags=${DRY_RUN} ${SIZE_ONLY_RUN} ${QUIET_RUN}" >> $GITHUB_OUTPUT 
       - name: Deploy MkDocs
         id: deploy-mkdocs
         uses: ntno/deploy-mkdocs-composite-action@v2
@@ -90,11 +112,11 @@ jobs:
           env-name: ${{ inputs.env-vars }}
           s3-bucket: ${{ env.deploy-target }}
           aws-region: us-east-1
-          make-vars-for-deploy-target: ${{ env.deploy-flags }}
+          make-vars-for-deploy-target: ${{ steps.set-env-vars.outputs.deploy-flags }}
           role-to-assume: ${{ secrets.PRODUCTION_IAM_ROLE_ARN }}
       - name: Report Result
         run: |
-          if [[ "${{ inputs.perform-deploy }}" == "false" ]]; then
+          if [[ "${{ inputs.enable-dry-run }}" == "false" ]]; then
               export MESSAGE="Deploy is disabled for current workflow run, deployment skipped..."
               echo "::notice title=Deployment Skipped::$MESSAGE"
           else
