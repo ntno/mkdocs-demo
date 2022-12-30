@@ -47,7 +47,7 @@ jobs:
         uses: ntno/setup-buildenv@v1   
       - name: Deploy PR
         id: deploy-mkdocs
-        uses: ntno/deploy-mkdocs-composite-action@v2
+        uses: ntno/deploy-mkdocs-composite-action@v3-alpha
         with:         
           version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
           env-name: dev
