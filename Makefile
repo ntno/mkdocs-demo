@@ -10,6 +10,10 @@ ifeq ($(QUIET),1)
    QUIET_FLAG = --quiet
 endif
 
+ifeq ($(SIZE_ONLY_SYNC),1)
+   SIZE_ONLY_FLAG = --size-only
+endif
+
 ################################################
 ## run from machine with docker installed
 ## requires GNU Make
@@ -60,8 +64,8 @@ get-mkdocs-archive: check-env check-region check-version clean check-download-di
 		--directory ./site/ \
 		-xf $(download-directory)docs-site.tar 
 
-deploy-mkdocs: check-env check-region check-bucket-name
-	aws s3 sync $(DRY_RUN_FLAG) $(QUIET_FLAG) --no-progress --sse AES256 --acl public-read ./site/ s3://$(bucket-name)/
+deploy-mkdocs: check-env check-region check-bucket-name 
+	aws s3 sync $(DRY_RUN_FLAG) $(QUIET_FLAG) $(SIZE_ONLY_FLAG) --no-progress --sse AES256 --acl public-read ./site/ s3://$(bucket-name)/
 
 serve-mkdocs: check-env check-region clean install-requirements
 	eval "$$(buildenv -e $(env) -d $(region))" && \
