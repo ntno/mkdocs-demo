@@ -1,4 +1,4 @@
-mkdocs
+mkdocs==1.2.0
 mkdocs-material
 pymdown-extensions
 mkdocs-markdown-filter
