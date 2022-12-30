@@ -3,4 +3,3 @@ mkdocs-material
 pymdown-extensions
 mkdocs-markdown-filter
 mkdocs-macros-plugin
-pandas
