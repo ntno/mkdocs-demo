@@ -39,13 +39,12 @@ jobs:
         id: empty-bucket
         shell: bash {0}
         run: |
-          bucketStatus=$(aws s3api head-bucket --bucket "${{ env.bucket-name }}")
-          echo "bucketStatus=${bucketStatus}"
-          if [[  $("${bucketStatus}" | grep 'Not Found') ]]; then
+          bucketStatus=`$(aws s3api head-bucket --bucket "${{ env.bucket-name }}")`
+          if [[  "${bucketStatus}" | grep 'Not Found' ]]; then
               echo "${{ env.bucket-name }} bucket does not exist";
-          elif [[ $("${bucketStatus}" | grep 'Forbidden') ]]; then
+          elif [[ "${bucketStatus}" | grep 'Forbidden' ]]; then
               echo "${{ env.bucket-name }} bucket exists but not owned"
-          elif [[ $("${bucketStatus}" | grep 'Bad Request') ]]; then
+          elif [[ "${bucketStatus}" | grep 'Bad Request' ]]; then
               echo "${{ env.bucket-name }} bucket name specified is less than 3 or greater than 63 characters"
           else
               echo "forcing non-empty bucket delete: s3://${{ env.bucket-name }}"
