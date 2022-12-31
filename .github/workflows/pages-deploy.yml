@@ -7,7 +7,6 @@ env:
 # only one GitHub Pages Deploy workflow at a time
 concurrency:
   group: GitHub-Pages-Deploy
-  cancel-in-progress: true
 
 on:
   workflow_dispatch:

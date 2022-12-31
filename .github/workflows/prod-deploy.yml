@@ -8,7 +8,6 @@ env:
 # only one Production Deploy workflow at a time
 concurrency:
   group: Production-Deploy
-  cancel-in-progress: true
 
 on:
   workflow_dispatch:
