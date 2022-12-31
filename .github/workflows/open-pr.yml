@@ -61,9 +61,9 @@ jobs:
           export MESSAGE="please review changes at ${URL}"
           gh pr comment ${{ github.event.number }} --body "${MESSAGE}"
           echo "::notice title=Created PR Environment::environment url: $URL"
-  call-test-pr-workflow:
+  call-pr-deploy-workflow:
     needs: [call-metadata-workflow, create-pr-environment]
-    uses: ./.github/workflows/test-pr.yml
+    uses: ./.github/workflows/pr-deploy.yml
     secrets: inherit
     with:
       git-revision-sha: "${{ needs.call-metadata-workflow.outputs.revision-sha }}"
