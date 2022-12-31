@@ -5,6 +5,11 @@ env:
   deploy-target: factually-settled-boxer
   deployment-url: http://factually-settled-boxer.s3-website.us-east-1.amazonaws.com
 
+# only one Production Deploy workflow at a time
+concurrency:
+  group: Production-Deploy
+  cancel-in-progress: true
+
 on:
   workflow_dispatch:
     inputs:
