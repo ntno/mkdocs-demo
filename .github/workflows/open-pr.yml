@@ -41,6 +41,7 @@ jobs:
       - name: Create PR Environment
         id: create-pr-env
         working-directory: ./.github/ci
+        shell: bash {0}
         run: |
           echo "creating new environment for PR #${{ github.event.number }}"
           aws s3api wait bucket-not-exists --bucket "${{ env.bucket-name }}"
