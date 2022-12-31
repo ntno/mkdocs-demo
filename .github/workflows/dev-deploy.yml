@@ -45,6 +45,13 @@ permissions:
   contents: read
 
 jobs:
+  report-inputs:
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Report Inputs
+        run: |
+          export MESSAGE="tag=${{ inputs.tag }}, env-vars=${{ inputs.env-vars }}, enable-dry-run=${{ inputs.enable-dry-run }}, enable-size-only-run=${{ inputs.enable-size-only-run }}, enable-quiet-run=${{ inputs.enable-quiet-run }}"
+          echo "::notice title=Worfklow Inputs::$MESSAGE"
   check-out-tag:
     runs-on: ubuntu-latest
     steps: 
