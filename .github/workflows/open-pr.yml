@@ -43,6 +43,7 @@ jobs:
         working-directory: ./.github/ci
         run: |
           echo "creating new environment for PR #${{ github.event.number }}"
+          aws s3api wait bucket-not-exists --bucket "${{ steps.set-vars.outputs.bucket-name }}"
           aws cloudformation create-stack \
                     --template-body file://s3-website.yml \
                     --stack-name "${{ env.stack-name }}"  \
