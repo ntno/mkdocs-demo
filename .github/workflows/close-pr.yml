@@ -34,15 +34,34 @@ jobs:
         id: set-env-vars
         run: |
           echo "stack-name=${{ needs.call-metadata-workflow.outputs.pr-env }}" >> $GITHUB_ENV
-          echo "bucket-name=${{ needs.call-metadata-workflow.outputs.pr-env }}" >> $GITHUB_ENV          
-      - name: Destroy PR Environment
+          echo "bucket-name=${{ needs.call-metadata-workflow.outputs.pr-env }}" >> $GITHUB_ENV    
+      - name: Empty Bucket
+        id: empty-bucket
         run: |
-          echo "shutting down environment for PR #${{ github.event.number }}"
-          
-          echo "forcing non-empty bucket delete: s3://${{ env.bucket-name }}"
-          aws s3 rb "s3://${{ env.bucket-name }}" --force  
-
-          echo "deleting cloudformation stack: ${{ env.stack-name }}"
-          aws cloudformation delete-stack --stack-name "${{ env.stack-name }}"
-
-          echo "::notice title=Destroyed PR Environment::environment name: ${{ env.stack-name }}"
+          bucketStatus=$(aws s3api head-bucket --bucket "${{ env.bucket-name }}" 2>&1)
+          if echo "${bucketStatus}" | grep 'Not Found';
+          then
+            echo "${{ env.bucket-name }} bucket does not exist";
+          elif echo "${bucketStatus}" | grep 'Forbidden';
+          then
+            echo "{{ env.bucket-name }} bucket exists but not owned"
+          elif echo "${bucketStatus}" | grep 'Bad Request';
+          then
+            echo "{{ env.bucket-name }} bucket name specified is less than 3 or greater than 63 characters"
+          else
+            echo "forcing non-empty bucket delete: s3://${{ env.bucket-name }}"
+            aws s3 rb "s3://${{ env.bucket-name }}" --force  
+          fi
+      - name: Delete PR Environment
+        run: |
+          stackStatus=$(aws cloudformation describe-stacks --stack-name  "${{ env.stack-name }}" 2>&1)
+          if echo "${stackStatus}" | grep 'does not exist';
+          then
+            echo "${{ env.stack-name }} stack does not exist";
+            echo "::notice title=Skipped PR Environment Destroy::environment name: ${{ env.stack-name }} does not exist"
+          else
+            aws cloudformation wait stack-create-complete --stack-name "${{ env.stack-name }}"
+            echo "deleting cloudformation stack: ${{ env.stack-name }}"
+            aws cloudformation delete-stack --stack-name "${{ env.stack-name }}"
+            echo "::notice title=Destroyed PR Environment::environment name: ${{ env.stack-name }}"
+          fi
