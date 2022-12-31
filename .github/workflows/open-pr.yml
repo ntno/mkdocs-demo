@@ -65,5 +65,3 @@ jobs:
     needs: [call-metadata-workflow, create-pr-environment]
     uses: ./.github/workflows/pr-deploy.yml
     secrets: inherit
-    with:
-      git-revision-sha: "${{ needs.call-metadata-workflow.outputs.revision-sha }}"

@@ -5,10 +5,6 @@ on:
   pull_request:
     types: [ synchronize ]
   workflow_call:
-    inputs:
-      git-revision-sha:
-        description: 'Git SHA to checkout'
-        type: string
 
 # only one deploy for a PR at a time
 concurrency:
@@ -32,7 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with: 
-          ref: "${{ inputs.git-revision-sha }} || ${{ github.github.sha }}"
+          ref: "${{ github.github.sha }}"
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1        
       - name: Build PR
@@ -54,7 +50,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with: 
-          ref: "${{ inputs.git-revision-sha }} || ${{ github.github.sha }}"
+          ref: "${{ github.github.sha }}"
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1   
       - name: Deploy PR
