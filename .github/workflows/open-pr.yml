@@ -5,6 +5,10 @@ on:
   pull_request:
     types: [ opened, reopened ]
 
+# only one PR lifecycle workflow at a time (open/close)
+concurrency:
+  group: ${{ github.ref }}
+
 # These permissions are needed to interact with GitHub's OIDC Token endpoint.
 permissions:
   id-token: write
@@ -13,7 +17,7 @@ permissions:
 
 jobs:
   call-metadata-workflow:
-    uses: ./.github/workflows/meta.yml 
+    uses: ./.github/workflows/meta.yml
     secrets: inherit
     with:
       pr-prefix: "ntno-mkdocs-demo-ci-pr-"
@@ -36,8 +40,10 @@ jobs:
       - name: Create PR Environment
         id: create-pr-env
         working-directory: ./.github/ci
+        shell: bash {0}
         run: |
           echo "creating new environment for PR #${{ github.event.number }}"
+          aws s3api wait bucket-not-exists --bucket "${{ env.bucket-name }}"
           aws cloudformation create-stack \
                     --template-body file://s3-website.yml \
                     --stack-name "${{ env.stack-name }}"  \
@@ -55,3 +61,7 @@ jobs:
           export MESSAGE="please review changes at ${URL}"
           gh pr comment ${{ github.event.number }} --body "${MESSAGE}"
           echo "::notice title=Created PR Environment::environment url: $URL"
+  call-pr-deploy-workflow:
+    needs: [call-metadata-workflow, create-pr-environment]
+    uses: ./.github/workflows/pr-deploy.yml
+    secrets: inherit

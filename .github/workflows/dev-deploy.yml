@@ -5,6 +5,10 @@ env:
   deploy-target: factually-settled-boxer-development
   deployment-url: http://factually-settled-boxer-development.s3-website.us-east-1.amazonaws.com
 
+# only one Development Deploy workflow at a time
+concurrency:
+  group: Development-Deploy
+
 on:
   workflow_dispatch:
     inputs:

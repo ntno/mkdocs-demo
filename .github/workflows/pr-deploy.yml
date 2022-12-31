@@ -1,11 +1,15 @@
-# Simple workflow for testing mkdocs site 
-name: Test Pull Request
+# Simple workflow for deploying mkdocs site to temporary PR environment
+name: Deploy Pull Request
 
 on:
-  workflow_dispatch:
   pull_request:
     types: [ synchronize ]
-  
+  workflow_call:
+
+# only one deploy for a PR at a time
+concurrency:
+  group: ${{ github.ref }}-pr-deploy
+ 
 # These permissions are needed to interact with GitHub's OIDC Token endpoint.
 permissions:
   id-token: write
@@ -17,12 +21,14 @@ jobs:
     secrets: inherit 
     with:
       pr-prefix: "ntno-mkdocs-demo-ci-pr-"
-  build-pr:
+  build-mkdocs:
     needs: [call-metadata-workflow]
     runs-on: ubuntu-latest
     steps: 
       - name: Checkout
         uses: actions/checkout@v3
+        with: 
+          ref: "${{ github.github.sha }}"
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1        
       - name: Build PR
@@ -37,12 +43,14 @@ jobs:
         run: |
           export MESSAGE="PR #${{ needs.call-metadata-workflow.outputs.pr-number }} built with version=${{ needs.call-metadata-workflow.outputs.build-tag }}"
           echo "::notice title=PR Built::$MESSAGE"
-  deploy-pr:
-    needs: [call-metadata-workflow, build-pr]
+  deploy-mkdocs:
+    needs: [call-metadata-workflow, build-mkdocs]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with: 
+          ref: "${{ github.github.sha }}"
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1   
       - name: Deploy PR

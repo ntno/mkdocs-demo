@@ -5,6 +5,10 @@ env:
   deploy-target: factually-settled-boxer
   deployment-url: http://factually-settled-boxer.s3-website.us-east-1.amazonaws.com
 
+# only one Production Deploy workflow at a time
+concurrency:
+  group: Production-Deploy
+
 on:
   workflow_dispatch:
     inputs:
@@ -116,7 +120,7 @@ jobs:
           role-to-assume: ${{ secrets.PRODUCTION_IAM_ROLE_ARN }}
       - name: Report Result
         run: |
-          if [[ "${{ inputs.enable-dry-run }}" == "false" ]]; then
+          if [[ "${{ inputs.enable-dry-run }}" == "true" ]]; then
               export MESSAGE="Deploy is disabled for current workflow run, deployment skipped..."
               echo "::notice title=Deployment Skipped::$MESSAGE"
           else

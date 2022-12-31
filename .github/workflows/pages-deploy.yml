@@ -4,6 +4,10 @@ name: Deploy MkDocs to GitHub Pages
 env:
   gh-pages-url: https://ntno.github.io/mkdocs-demo
 
+# only one GitHub Pages Deploy workflow at a time
+concurrency:
+  group: GitHub-Pages-Deploy
+
 on:
   workflow_dispatch:
     inputs:
