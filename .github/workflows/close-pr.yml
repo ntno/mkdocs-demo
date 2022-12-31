@@ -62,6 +62,6 @@ jobs:
             aws cloudformation wait stack-create-complete --stack-name "${{ env.stack-name }}"
             echo "deleting cloudformation stack: ${{ env.stack-name }}"
             aws cloudformation delete-stack --stack-name "${{ env.stack-name }}"
-            aws cloudformation stack-delete-complete --stack-name "${{ env.stack-name }}"
+            aws cloudformation wait stack-delete-complete --stack-name "${{ env.stack-name }}"
             echo "::notice title=Destroyed PR Environment::deleted cloudformation stack ${{ env.stack-name }}"
           fi
