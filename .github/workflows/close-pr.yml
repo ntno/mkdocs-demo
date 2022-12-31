@@ -39,10 +39,7 @@ jobs:
         id: empty-bucket
         shell: bash {0}
         run: |
-          bucketStatus=$(aws s3api head-bucket --bucket "${{ env.bucket-name }}" 2>&1)
-          echo "bucketStatus=${bucketStatus}"
-          export BUCKET_STATUS=$(aws s3api head-bucket --bucket "${{ env.bucket-name }}" 2>&1)
-          echo "BUCKET_STATUS=${BUCKET_STATUS}"
+          bucketStatus=aws s3api head-bucket --bucket "${{ env.bucket-name }}" 2>&1
           if echo "${bucketStatus}" | grep 'Not Found'; then
               echo "${{ env.bucket-name }} bucket does not exist";
           elif echo "${bucketStatus}" | grep 'Forbidden'; then
