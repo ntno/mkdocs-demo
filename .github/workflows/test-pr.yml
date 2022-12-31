@@ -10,7 +10,7 @@ on:
 
 # only one PR workflow at a time (open/test/close)
 concurrency:
-  group: ${{ github.ref }}
+  group: ${{ github.ref }}-test
  
 # These permissions are needed to interact with GitHub's OIDC Token endpoint.
 permissions:
