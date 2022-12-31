@@ -54,9 +54,9 @@ jobs:
       - name: Delete PR Environment
         shell: bash {0}
         run: |
-          stackStatus=$(aws cloudformation describe-stacks --stack-name  "${{ env.stack-name }}" 2>&1)
-          if echo "${stackStatus}" | grep 'does not exist';
-          then
+          checkStackStatus="aws cloudformation describe-stacks --stack-name ${{ env.stack-name }} 2>&1"
+          stackStatus=$(eval "${checkStackStatus}")
+          if echo "${stackStatus}" | grep 'does not exist'; then
             echo "${{ env.stack-name }} stack does not exist";
             echo "::notice title=Skipped PR Environment Destroy::environment name: ${{ env.stack-name }} does not exist"
           else
