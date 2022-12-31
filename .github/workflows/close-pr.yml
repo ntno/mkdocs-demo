@@ -5,7 +5,7 @@ on:
   pull_request:
     types: [ closed, merged ]
 
-# only one PR workflow at a time (open/test/close)
+# only one PR lifecycle workflow at a time (open/close)
 concurrency:
   group: ${{ github.ref }}
 
