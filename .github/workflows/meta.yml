@@ -90,21 +90,22 @@ jobs:
       - name: set-revision-sha
         id: set-revision-sha
         run: echo "revision-sha=${{ github.sha }}" >> $GITHUB_OUTPUT
+      - name: set-build-tag
+        id: set-build-tag 
+        run: |
+          git init
+          echo "build-tag=$( git rev-parse --short ${{ github.sha }} )" >> $GITHUB_OUTPUT        
       - name: stash-event-payload
         id: stash-event-payload
         run: |
           mkdir -p ./details
           cat ${{ github.event_path }} > ./details/event-payload.json
           echo "artifact-name=details/event-payload.json" >> $GITHUB_OUTPUT
-      - uses: actions/upload-artifact@v3
+      - name: upload-event-payload-artifact
+        uses: actions/upload-artifact@v3
         with:
           name: event-payload.json
           path: ./details/
-      - name: set-build-tag
-        id: set-build-tag 
-        run: |
-          git init
-          echo "build-tag=$( git rev-parse --short ${{ github.sha }} )" >> $GITHUB_OUTPUT
       - name: inspect-outputs
         id: inspect-outputs
         run: |

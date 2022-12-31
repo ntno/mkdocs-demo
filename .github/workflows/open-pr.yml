@@ -48,7 +48,7 @@ jobs:
                     --template-body file://s3-website.yml \
                     --stack-name "${{ env.stack-name }}"  \
                     --parameters  ParameterKey=BucketName,ParameterValue="${{ env.bucket-name }}" \
-                    --on-failure DO_NOTHING \
+                    --on-failure DELETE \
                     --capabilities CAPABILITY_NAMED_IAM
           aws cloudformation wait stack-create-complete --stack-name "${{ env.stack-name }}"
           aws s3 cp --sse AES256 --acl public-read index.html "s3://${{ env.bucket-name }}/"

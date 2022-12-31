@@ -18,7 +18,7 @@ Resources:
           - ServerSideEncryptionByDefault:
               SSEAlgorithm: 'AES256'
     DeletionPolicy: Delete
-  BuckeReadPolicy:
+  BucketReadPolicy:
     Type: AWS::S3::BucketPolicy
     Properties:
       Bucket: !Ref S3Bucket
