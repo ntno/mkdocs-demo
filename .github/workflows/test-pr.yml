@@ -5,7 +5,12 @@ on:
   workflow_dispatch:
   pull_request:
     types: [ synchronize ]
-  
+
+# only one PR workflow at a time (open/test/close)
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+ 
 # These permissions are needed to interact with GitHub's OIDC Token endpoint.
 permissions:
   id-token: write
