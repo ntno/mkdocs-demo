@@ -54,7 +54,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
         with: 
-          ref: "${{ inputs.git-revision-sha }}"
+          ref: "${{ inputs.git-revision-sha }} || ${{ github.github.sha }}"
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1   
       - name: Deploy PR
