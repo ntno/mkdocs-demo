@@ -32,7 +32,7 @@ jobs:
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1        
       - name: Build PR
-        uses: ntno/build-mkdocs-composite-action@v3
+        uses: ntno/build-mkdocs-composite-action@v4
         with:
           archive-enabled: true
           version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
