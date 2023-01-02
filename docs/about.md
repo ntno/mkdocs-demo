@@ -1,0 +1,1 @@
+This site and its [supporting code](https://github.com/ntno/mkdocs-demo){target="_blank"} were created to demonstrate how to create a simple website using MkDocs.  

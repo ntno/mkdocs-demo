@@ -31,14 +31,14 @@ jobs:
           ref: "${{ github.github.sha }}"
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1        
-      # - name: Build PR
-      #   uses: ntno/build-mkdocs-composite-action@v4
-      #   with:
-      #     archive-enabled: true
-      #     version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
-      #     env-name: dev
-      #     aws-region: us-east-1
-      #     role-to-assume: ${{ secrets.INTEGRATION_IAM_ROLE_ARN }}
+      - name: Build PR
+        uses: ntno/build-mkdocs-composite-action@investigate-output-errors
+        with:
+          archive-enabled: true
+          version: ${{ needs.call-metadata-workflow.outputs.build-tag }}
+          env-name: dev
+          aws-region: us-east-1
+          role-to-assume: ${{ secrets.INTEGRATION_IAM_ROLE_ARN }}
       # - name: Report Result
       #   run: |
       #     export MESSAGE="PR #${{ needs.call-metadata-workflow.outputs.pr-number }} built with version=${{ needs.call-metadata-workflow.outputs.build-tag }}"
