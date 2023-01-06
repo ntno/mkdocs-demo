@@ -1,5 +1,4 @@
 mkdocs
-mkdocs-material
-pymdown-extensions
+mkdocs-terminal
 mkdocs-markdown-filter
 mkdocs-macros-plugin

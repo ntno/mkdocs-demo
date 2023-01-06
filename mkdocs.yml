@@ -1,37 +1,41 @@
 site_name: mkdocs-demo
+copyright: Copyright 2023 ntno
 site_author: ntno
 
 nav:
     - Home: 'index.md'
+    - Troubleshooting: 'help.md'
+    - About: 
+      - Index: 'about/index.md'
+      - Contributing: 'about/contributing.md'
+      - License: 'about/license.md'
+      - Release Notes:
+        - Index: 'about/release-notes/index.md'
+        - v1: 'about/release-notes/version-1.md'
+        - v2: 'about/release-notes/version-2.md'
+    - User Guide:
+      - Configuration: 'user-guide/configuration.md'
+      - Custom Themes: 'user-guide/custom-themes.md'
+      - Deployment: 'user-guide/deploying-your-docs.md'
+      - Styling: 'user-guide/styling-your-docs.md'
+      - Writing: 'user-guide/writing-your-docs.md'
     
 markdown_extensions:
-  - abbr
-  - admonition
-  - attr_list
-  - md_in_html
   - meta
-  - pymdownx.details
-  - pymdownx.snippets
-  - pymdownx.superfences
-  - pymdownx.tabbed
-  - pymdownx.tasklist:
-      custom_checkbox: true
+  - attr_list
   - toc:
-      permalink: true
+      permalink: "#"
 
 theme:
-  name: material
+  name: terminal
   features:
-    - navigation.tabs
-    - navigation.tabs.sticky
-    - navigation.sections
-    - toc.integrate
-  palette:
-    primary: light-green
-    accent: amber
+    # - toc.hide
+    # - navigation.side.hide
+    - navigation.side.indexes
+    # - navigation.top.hide
+    # - navigation.top.cursor_animation.hide
 
 plugins:
-  - search
   - markdown-filter
   - macros
 
