@@ -1,9 +1,6 @@
----
-title: Version 1 Release Notes
----
 # Version 1
 
-information about Version 1 release here
+Information about Version 1 release here
 
 ## Updates
 

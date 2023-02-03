@@ -1,24 +1,3 @@
----
-title: Custom Themes
-show_tiles_first: true
-tiles:
-  - caption: '@petradr'
-    img_src: ../../img/picsum/167_200x200.jpeg
-    tooltip: 'to Picsum homepage'
-    alt_text: 'Picsum Photo API.'
-    link_href: https://picsum.photos/ 
-  - caption: 'Marcin Czerwinski'
-    img_src: ../../img/picsum/127_200x200.jpeg
-    tooltip: 'to Picsum homepage'
-    alt_text: 'Picsum Photo API.'
-    link_href: https://picsum.photos/ 
-  - caption: 'Steve Richey'
-    img_src: ../../img/picsum/143_200x200.jpeg
-    tooltip: 'to Picsum homepage'
-    alt_text: 'Picsum Photo API.'
-    link_href: https://picsum.photos/ 
----
-# Testing Page
+Pellentesque elementum velit sapien, at eleifend sem tristique ac. Aliquam a dictum sapien. Sed blandit, eros eu consectetur mattis, urna dolor rutrum neque, nec pharetra magna tortor nec ante. Donec tellus velit, malesuada et mi sed, volutpat bibendum nunc. Sed consectetur nec nisl in congue. Duis ultrices elit ut urna vestibulum mollis. 
 
-See the [Home Page](/). All the other pages are for demonstration purposes
-with the navigation only.
+Praesent convallis augue in tempor elementum. Mauris suscipit condimentum augue ut elementum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Etiam ac nisl ut libero malesuada pretium. 

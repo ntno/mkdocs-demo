@@ -1,6 +1,3 @@
----
-title: Index
----
 # About This Project
 
 Mea at iuvaret fabulas, qui facer solet vocent in. No his sumo dolor doming. At commodo invidunt cum, quem constituto comprehensam vis ut. Cu elit ridens fabulas mei. Id per prima option labores. Pri at principes laboramus, est ex diceret singulis sadipscing.
