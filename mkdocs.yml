@@ -29,6 +29,8 @@ theme:
   palette:
     primary: light-green
     accent: amber
+  static_templates:
+    - 404.html
 
 plugins:
   - search
