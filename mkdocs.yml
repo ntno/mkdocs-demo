@@ -1,5 +1,8 @@
 site_name: mkdocs-demo
 site_author: ntno
+repo_url: https://github.com/ntno/mkdocs-demo
+edit_uri: edit/main/docs/
+copyright: Copyright 2023 Natan Organick, All rights reserved
 
 nav:
     - Home: 'index.md'
@@ -38,12 +41,19 @@ markdown_extensions:
 
 theme:
   name: terminal
-
+  features:
+    - navigation.side.indexes
+    - revision.date
+    - revision.history
+  static_templates:
+    - 404.html
+    - about/coverage-report/index.html
 
 plugins:
   - search
   - markdown-filter
   - macros
+  - git-revision-date
 
 extra:
   GREETING: !ENV [GREETING]
