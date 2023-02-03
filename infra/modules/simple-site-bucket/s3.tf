@@ -29,7 +29,7 @@ resource "aws_s3_bucket_website_configuration" "site_bucket_website_configuratio
   }
 
   error_document {
-    key = "error/index.html"
+    key = "404.html"
   }
 }
 
