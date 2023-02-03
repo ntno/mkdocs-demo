@@ -1,34 +1,53 @@
 site_name: mkdocs-demo
 site_author: ntno
+repo_url: https://github.com/ntno/mkdocs-demo
+edit_uri: edit/main/docs/
+copyright: Copyright 2023 Natan Organick, All rights reserved
 
 nav:
     - Home: 'index.md'
+    - Troubleshooting: 'help.md'
+    - About: 
+      - Index: 'about/index.md'
+      - Contributing: 'about/contributing.md'
+      - License: 'about/license.md'
+      - Release Notes:
+        - Index: 'about/release-notes/index.md'
+        - v1: 'about/release-notes/version-1.md'
+        - v2: 'about/release-notes/version-2.md'
+    - User Guide:
+      - Configuration: 'user-guide/configuration.md'
+      - Custom Themes: 'user-guide/custom-themes.md'
+      - Deployment: 'user-guide/deploying-your-docs.md'
+      - Styling: 'user-guide/styling-your-docs.md'
+      - Writing: 'user-guide/writing-your-docs.md'
+
     
 markdown_extensions:
-  - abbr
-  - admonition
+  # Python Markdown  
   - attr_list
+  - def_list
+  - footnotes
   - md_in_html
   - meta
-  - pymdownx.details
-  - pymdownx.snippets
-  - pymdownx.superfences
-  - pymdownx.tabbed
-  - pymdownx.tasklist:
-      custom_checkbox: true
   - toc:
-      permalink: true
+      permalink: "#"
+      permalink_title: Anchor link to this section for reference
+
+  # PyMdown Extensions
+  - pymdownx.caret
+  - pymdownx.mark
+  - pymdownx.tilde
+  - pymdownx.snippets:
+      base_path: 
+        - docs
 
 theme:
-  name: material
+  name: terminal
   features:
-    - navigation.tabs
-    - navigation.tabs.sticky
-    - navigation.sections
-    - toc.integrate
-  palette:
-    primary: light-green
-    accent: amber
+    - navigation.side.indexes
+    - revision.date
+    - revision.history
   static_templates:
     - 404.html
 
@@ -36,6 +55,7 @@ plugins:
   - search
   - markdown-filter
   - macros
+  - git-revision-date
 
 extra:
   GREETING: !ENV [GREETING]
