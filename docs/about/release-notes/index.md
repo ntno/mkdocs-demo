@@ -1,3 +1,5 @@
+# Release Notes
+
 | Release            | Supported? |
 | ------------------ | ---------- |
 | [v2](version-2.md) | yes        |

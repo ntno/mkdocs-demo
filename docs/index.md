@@ -1,6 +1,3 @@
----
----
-
 # {{ GREETING }} {{ NAME }} !!!
 
 this is **bold** text
