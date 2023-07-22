@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <meta name="generator" content="mkdocs-1.4.2, mkdocs-terminal-4.1.0">
+    <meta name="generator" content="mkdocs-1.4.3, mkdocs-terminal-4.4.0">
      
     
     <meta name="author" content="ntno"> 
@@ -28,8 +28,31 @@
 <link href="../css/terminal.css" rel="stylesheet">
 <link href="../css/theme.css" rel="stylesheet">
 <link href="../css/theme.tile_grid.css" rel="stylesheet">
-<!-- default color palette-->
+<link href="../css/theme.footer.css" rel="stylesheet">
+<!-- default color palette -->
 <link href="../css/palettes/default.css" rel="stylesheet">
+
+<!-- page layout -->
+<style>
+/* initially set page layout to a one column grid */
+.terminal-mkdocs-main-grid {
+    display: grid;
+    grid-column-gap: 1.4em;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+}
+
+/*  
+*   when side navigation is not hidden, use a two column grid.  
+*   if the screen is too narrow, fall back to the initial one column grid layout.
+*   in this case the main content will be placed under the navigation panel. 
+*/
+@media only screen and (min-width: 70em) {
+    .terminal-mkdocs-main-grid {
+        grid-template-columns: 4fr 9fr;
+    }
+}</style>
+
 
 
      
@@ -105,13 +128,11 @@
 </div>
         
     <div class="container">
-        <div class="terminal-mkdocs-main-grid"><aside id="menu"><div class="container">
-  <div class="terminal-nav">
-    <nav>
-      
-        <ul class="terminal-mkdocs-side-nav-items">
-            
-              
+        <div class="terminal-mkdocs-main-grid"><aside id="terminal-mkdocs-side-panel"><nav>
+  
+    <ul class="terminal-mkdocs-side-nav-items">
+        
+          
 
 
 
@@ -129,8 +150,8 @@
     
     
   </li>
-            
-              
+        
+          
 
 
 
@@ -148,8 +169,8 @@
     
     
   </li>
-            
-              
+        
+          
 
 
 
@@ -239,8 +260,8 @@
         
     
   </li>
-            
-              
+        
+          
 
 
 
@@ -374,18 +395,17 @@
         
     
   </li>
-            
-        </ul>
-      
-    </nav>
-  </div>
-</div><hr>
+        
+    </ul>
+  
+</nav><hr>
 <nav>
     <ul>
         <li><a href="#macros-plugin-environment">Macros Plugin Environment</a></li>
         <li><a href="#general-list">General List</a></li><li><a href="#config-information">Config Information</a></li><li><a href="#macros">Macros</a></li><li><a href="#git-information">Git Information</a></li><li><a href="#page-attributes">Page Attributes</a></li><li><a href="#plugin-filters">Plugin Filters</a></li><li><a href="#builtin-jinja2-filters">Builtin Jinja2 Filters</a></li>
     </ul>
-</nav></aside>
+</nav>
+</aside>
             <main id="terminal-mkdocs-main-content">
     
     
@@ -394,8 +414,8 @@
     
 
 <section id="mkdocs-terminal-content">
-    <h1 id="macros-plugin-environment">Macros Plugin Environment<a class="headerlink" href="#macros-plugin-environment" title="Anchor link to this section for reference">#</a></h1>
-<h2 id="general-list">General List<a class="headerlink" href="#general-list" title="Anchor link to this section for reference">#</a></h2>
+    <h2 id="macros-plugin-environment">Macros Plugin Environment<a class="headerlink" href="#macros-plugin-environment" title="Anchor link to this section for reference">#</a></h2>
+<h3 id="general-list">General List<a class="headerlink" href="#general-list" title="Anchor link to this section for reference">#</a></h3>
 <p>All available variables and filters within the macros plugin:</p>
 <table class="pretty" style="background-color: #F0FFFF; border:1px solid #DCDCDC; padding: 5px">
 
@@ -422,7 +442,7 @@
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>MkDocsConfig</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">{'config_file_path': '/home/runner/work/mkdocs-demo/mkdocs-demo/mkdocs.yml', 'site_name': 'mkdocs-demo', 'nav': [{'Home': 'index.md'}, {'Troubleshooting': 'help.md'}, {'About': [{'Index': 'about/index.md'}, {'Contributing': 'about/contributing.md'}, {'License': 'about/license.md'}, {'Release Notes': [{'Index': 'about/release-notes/index.md'}, {'v1': 'about/release-notes/version-1.md'}, {'v2': 'about/release-notes/version-2.md'}]}]}, {'User Guide': [{'Configuration': 'user-guide/configuration.md'}, {'Custom Themes': 'user-guide/custom-themes.md'}, {'Deployment': 'user-guide/deploying-your-docs.md'}, {'Styling': 'user-guide/styling-your-docs.md'}, {'Writing': 'user-guide/writing-your-docs.md'}]}], 'pages': None, 'site_url': None, 'site_description': None, 'site_author': 'ntno', 'theme': Theme(name='terminal', dirs=['/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/terminal', '/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/mkdocs/templates', '/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/mkdocs/contrib/search/templates'], static_templates=['404.html', 'theme_version.html', 'sitemap.xml'], name='terminal', locale=Locale(language='en', territory=''), include_search_page=False, search_index_only=False, features=['navigation.side.indexes', 'revision.date', 'revision.history'], palette='default'), 'docs_dir': '/home/runner/work/mkdocs-demo/mkdocs-demo/docs', 'site_dir': '/home/runner/work/mkdocs-demo/mkdocs-demo/site', 'copyright': 'Copyright 2023 Natan Organick, All rights reserved', 'google_analytics': None, 'dev_addr': _IpAddressValue(host='127.0.0.1', port=8000), 'use_directory_urls': True, 'repo_url': 'https://github.com/ntno/mkdocs-demo', 'repo_name': 'GitHub', 'edit_uri_template': None, 'edit_uri': 'edit/main/docs/', 'extra_css': [], 'extra_javascript': ['search/main.js'], 'extra_templates': [], 'markdown_extensions': ['toc', 'tables', 'fenced_code', 'attr_list', 'def_list', 'footnotes', 'md_in_html', 'meta', 'pymdownx.caret', 'pymdownx.mark', 'pymdownx.tilde', 'pymdownx.snippets'], 'mdx_configs': {'toc': {'permalink': '#', 'permalink_title': 'Anchor link to this section for reference'}, 'pymdownx.snippets': {'base_path': ['docs']}}, 'strict': False, 'remote_branch': 'gh-pages', 'remote_name': 'origin', 'extra': {'GREETING': 'hello', 'NAME': 'Bob', 'ENV_LEVEL': 'dev', 'REGION': 'us-east-1'}, 'plugins': {'search': <mkdocs.contrib.search.SearchPlugin object at 0x7f753ae245e0>, 'markdown-filter': <mkdocs_markdown_filter.plugin.MarkdownFilterPlugin object at 0x7f753adc1340>, 'macros': <mkdocs_macros.plugin.MacrosPlugin object at 0x7f753adcc6a0>, 'git-revision-date': <mkdocs_git_revision_date_plugin.plugin.GitRevisionDatePlugin object at 0x7f753adcc6d0>}, 'hooks': {}, 'watch': []}</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">{'config_file_path': '/home/runner/work/mkdocs-demo/mkdocs-demo/mkdocs.yml', 'site_name': 'mkdocs-demo', 'nav': [{'Home': 'index.md'}, {'Troubleshooting': 'help.md'}, {'About': [{'Index': 'about/index.md'}, {'Contributing': 'about/contributing.md'}, {'License': 'about/license.md'}, {'Release Notes': [{'Index': 'about/release-notes/index.md'}, {'v1': 'about/release-notes/version-1.md'}, {'v2': 'about/release-notes/version-2.md'}]}]}, {'User Guide': [{'Configuration': 'user-guide/configuration.md'}, {'Custom Themes': 'user-guide/custom-themes.md'}, {'Deployment': 'user-guide/deploying-your-docs.md'}, {'Styling': 'user-guide/styling-your-docs.md'}, {'Writing': 'user-guide/writing-your-docs.md'}]}], 'pages': None, 'site_url': None, 'site_description': None, 'site_author': 'ntno', 'theme': Theme(name='terminal', dirs=['/opt/hostedtoolcache/Python/3.8.17/x64/lib/python3.8/site-packages/terminal', '/opt/hostedtoolcache/Python/3.8.17/x64/lib/python3.8/site-packages/mkdocs/templates', '/opt/hostedtoolcache/Python/3.8.17/x64/lib/python3.8/site-packages/mkdocs/contrib/search/templates'], static_templates=['sitemap.xml', 'theme_version.html', '404.html'], name='terminal', locale=Locale(language='en', territory=''), include_search_page=False, search_index_only=False, features=['footer.prev_next', 'navigation.side.indexes', 'revision.date', 'revision.history'], palette='default'), 'docs_dir': '/home/runner/work/mkdocs-demo/mkdocs-demo/docs', 'site_dir': '/home/runner/work/mkdocs-demo/mkdocs-demo/site', 'copyright': 'Copyright 2023 Natan Organick, All rights reserved', 'google_analytics': None, 'dev_addr': _IpAddressValue(host='127.0.0.1', port=8000), 'use_directory_urls': True, 'repo_url': 'https://github.com/ntno/mkdocs-demo', 'repo_name': 'GitHub', 'edit_uri_template': None, 'edit_uri': 'edit/main/docs/', 'extra_css': [], 'extra_javascript': ['search/main.js'], 'extra_templates': [], 'markdown_extensions': ['toc', 'tables', 'fenced_code', 'attr_list', 'def_list', 'footnotes', 'md_in_html', 'meta', 'pymdownx.caret', 'pymdownx.mark', 'pymdownx.tilde', 'pymdownx.snippets'], 'mdx_configs': {'toc': {'permalink': '#', 'permalink_title': 'Anchor link to this section for reference'}, 'pymdownx.snippets': {'base_path': ['docs']}}, 'strict': False, 'remote_branch': 'gh-pages', 'remote_name': 'origin', 'extra': {'GREETING': 'hello', 'NAME': 'Bob', 'ENV_LEVEL': 'dev', 'REGION': 'us-east-1'}, 'plugins': {'search': <mkdocs.contrib.search.SearchPlugin object at 0x7fdcfd6adb20>, 'markdown-filter': <mkdocs_markdown_filter.plugin.MarkdownFilterPlugin object at 0x7fdcfd8e2fd0>, 'macros': <mkdocs_macros.plugin.MacrosPlugin object at 0x7fdcfd8e2940>, 'git-revision-date': <mkdocs_git_revision_date_plugin.plugin.GitRevisionDatePlugin object at 0x7fdcfd5d6d30>}, 'hooks': {}, 'watch': []}</td>
 
         </tr>
 
@@ -432,7 +452,7 @@
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>dict</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">system = 'Linux', system_version = '5.15.0-1031-azure', python_version = '3.8.16', mkdocs_version = '1.4.2', macros_plugin_version = '0.7.0', jinja2_version = '3.1.2'</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">system = 'Linux', system_version = '5.15.0-1041-azure', python_version = '3.8.17', mkdocs_version = '1.4.3', macros_plugin_version = '1.0.2', jinja2_version = '3.1.2'</td>
 
         </tr>
 
@@ -442,7 +462,7 @@
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>LegacyConfig</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">{'module_name': 'main', 'modules': [], 'include_dir': '', 'include_yaml': [], 'j2_block_start_string': '', 'j2_block_end_string': '', 'j2_variable_start_string': '', 'j2_variable_end_string': '', 'on_undefined': 'keep', 'on_error_fail': False, 'verbose': False}</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">{'module_name': 'main', 'modules': [], 'render_by_default': True, 'include_dir': '', 'include_yaml': [], 'j2_block_start_string': '', 'j2_block_end_string': '', 'j2_variable_start_string': '', 'j2_variable_end_string': '', 'on_undefined': 'keep', 'on_error_fail': False, 'verbose': False}</td>
 
         </tr>
 
@@ -452,7 +472,7 @@
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>dict</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">status = True, <b>date</b> [<i>datetime</i>], short_commit = '4b90abf', commit = '4b90abf9ed97af2ad7ed744431637f8bfb2e4415', tag = '4.1.0', author = 'ntno', author_email = 'ntno@users.noreply.github.com', committer = 'GitHub', committer_email = 'noreply@github.com', date_ISO = 'Fri Feb 3 13:31:05 2023 -0500', message = 'set error page to 404.html (#34)', raw = 'commit 4b90abf9ed97af2ad7ed744431637f8bfb2e4415\nAuthor: ntno <ntno@users.noreply.github.com>\nDate:   Fri Feb 3 13:31:05 2023 -0500\n\n    set error page to 404.html (#34)', root_dir = '/home/runner/work/mkdocs-demo/mkdocs-demo'</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">status = True, <b>date</b> [<i>datetime</i>], short_commit = 'a6d798d', commit = 'a6d798d532614f8f8b9607d4e91e20a8622a34bf', tag = '4.2.0', author = 'ntno', author_email = 'ntno@users.noreply.github.com', committer = 'GitHub', committer_email = 'noreply@github.com', date_ISO = 'Sat Jul 22 13:05:53 2023 -0400', message = 'Fix cicd (#35)\n\n* bump actions\n\n* fix cloudformation template for new s3 reqs\n\n* bump cicd infra module\n\n* remove public-read acl use\n\n* turn on prev/next links theme feature', raw = 'commit a6d798d532614f8f8b9607d4e91e20a8622a34bf\nAuthor: ntno <ntno@users.noreply.github.com>\nDate:   Sat Jul 22 13:05:53 2023 -0400\n\n    Fix cicd (#35)\n    \n    * bump actions\n    \n    * fix cloudformation template for new s3 reqs\n    \n    * bump cicd infra module\n    \n    * remove public-read acl use\n    \n    * turn on prev/next links theme feature', root_dir = '/home/runner/work/mkdocs-demo/mkdocs-demo'</td>
 
         </tr>
 
@@ -542,7 +562,7 @@
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>Files</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><mkdocs.structure.files.Files object at 0x7f753bba7730></td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><mkdocs.structure.files.Files object at 0x7fdcfe981670></td>
 
         </tr>
 
@@ -558,7 +578,7 @@
 
 </table>
 
-<h2 id="config-information">Config Information<a class="headerlink" href="#config-information" title="Anchor link to this section for reference">#</a></h2>
+<h3 id="config-information">Config Information<a class="headerlink" href="#config-information" title="Anchor link to this section for reference">#</a></h3>
 <p>Standard MkDocs configuration information. Do not try to modify.</p>
 <p>e.g. <code>{{ config.docs_dir }}</code></p>
 <p>See also the <a href="https://www.MkDocs.org/user-guide/custom-themes/#config">MkDocs documentation on the config object</a>.</p>
@@ -647,7 +667,7 @@
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>Theme</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">Theme(name='terminal', dirs=['/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/terminal', '/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/mkdocs/templates', '/opt/hostedtoolcache/Python/3.8.16/x64/lib/python3.8/site-packages/mkdocs/contrib/search/templates'], static_templates=['404.html', 'theme_version.html', 'sitemap.xml'], name='terminal', locale=Locale(language='en', territory=''), include_search_page=False, search_index_only=False, features=['navigation.side.indexes', 'revision.date', 'revision.history'], palette='default')</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">Theme(name='terminal', dirs=['/opt/hostedtoolcache/Python/3.8.17/x64/lib/python3.8/site-packages/terminal', '/opt/hostedtoolcache/Python/3.8.17/x64/lib/python3.8/site-packages/mkdocs/templates', '/opt/hostedtoolcache/Python/3.8.17/x64/lib/python3.8/site-packages/mkdocs/contrib/search/templates'], static_templates=['sitemap.xml', 'theme_version.html', '404.html'], name='terminal', locale=Locale(language='en', territory=''), include_search_page=False, search_index_only=False, features=['footer.prev_next', 'navigation.side.indexes', 'revision.date', 'revision.history'], palette='default')</td>
 
         </tr>
 
@@ -873,7 +893,7 @@
 
 </table>
 
-<h2 id="macros">Macros<a class="headerlink" href="#macros" title="Anchor link to this section for reference">#</a></h2>
+<h3 id="macros">Macros<a class="headerlink" href="#macros" title="Anchor link to this section for reference">#</a></h3>
 <p>These macros have been defined programmatically for this environment
 (module or pluglets). </p>
 <table class="pretty" style="background-color: #F0FFFF; border:1px solid #DCDCDC; padding: 5px">
@@ -927,7 +947,7 @@
 
 </table>
 
-<h2 id="git-information">Git Information<a class="headerlink" href="#git-information" title="Anchor link to this section for reference">#</a></h2>
+<h3 id="git-information">Git Information<a class="headerlink" href="#git-information" title="Anchor link to this section for reference">#</a></h3>
 <p>Information available on the last commit and the git repository containing the
 documentation project:</p>
 <p>e.g. <code>{{ git.message }}</code></p>
@@ -956,7 +976,7 @@ documentation project:</p>
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>datetime</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">datetime.datetime(2023, 2, 3, 13, 31, 5, tzinfo=tzoffset(None, -18000))</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">datetime.datetime(2023, 7, 22, 13, 5, 53, tzinfo=tzoffset(None, -14400))</td>
 
         </tr>
 
@@ -966,7 +986,7 @@ documentation project:</p>
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>str</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'4b90abf'</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'a6d798d'</td>
 
         </tr>
 
@@ -976,7 +996,7 @@ documentation project:</p>
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>str</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'4b90abf9ed97af2ad7ed744431637f8bfb2e4415'</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'a6d798d532614f8f8b9607d4e91e20a8622a34bf'</td>
 
         </tr>
 
@@ -986,7 +1006,7 @@ documentation project:</p>
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>str</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'4.1.0'</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'4.2.0'</td>
 
         </tr>
 
@@ -1036,7 +1056,7 @@ documentation project:</p>
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>str</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'Fri Feb 3 13:31:05 2023 -0500'</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'Sat Jul 22 13:05:53 2023 -0400'</td>
 
         </tr>
 
@@ -1046,7 +1066,7 @@ documentation project:</p>
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>str</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'set error page to 404.html (#34)'</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'Fix cicd (#35)\n\n* bump actions\n\n* fix cloudformation template for new s3 reqs\n\n* bump cicd infra module\n\n* remove public-read acl use\n\n* turn on prev/next links theme feature'</td>
 
         </tr>
 
@@ -1056,7 +1076,7 @@ documentation project:</p>
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>str</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'commit 4b90abf9ed97af2ad7ed744431637f8bfb2e4415\nAuthor: ntno <ntno@users.noreply.github.com>\nDate:   Fri Feb 3 13:31:05 2023 -0500\n\n    set error page to 404.html (#34)'</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'commit a6d798d532614f8f8b9607d4e91e20a8622a34bf\nAuthor: ntno <ntno@users.noreply.github.com>\nDate:   Sat Jul 22 13:05:53 2023 -0400\n\n    Fix cicd (#35)\n    \n    * bump actions\n    \n    * fix cloudformation template for new s3 reqs\n    \n    * bump cicd infra module\n    \n    * remove public-read acl use\n    \n    * turn on prev/next links theme feature'</td>
 
         </tr>
 
@@ -1072,7 +1092,7 @@ documentation project:</p>
 
 </table>
 
-<h2 id="page-attributes">Page Attributes<a class="headerlink" href="#page-attributes" title="Anchor link to this section for reference">#</a></h2>
+<h3 id="page-attributes">Page Attributes<a class="headerlink" href="#page-attributes" title="Anchor link to this section for reference">#</a></h3>
 <p>Provided by MkDocs. These attributes change for every page
 (the attributes shown are for this page).</p>
 <p>e.g. <code>{{ page.title }}</code></p>
@@ -1162,7 +1182,7 @@ documentation project:</p>
 
             <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px"><i>str</i></td>
 
-            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'2023-02-03'</td>
+            <td style="vertical-align:top; border:1px solid #DCDCDC; padding: 5px">'2023-07-22'</td>
 
         </tr>
 
@@ -1245,7 +1265,7 @@ documentation project:</p>
 {% endfor %}
 
 </code></pre>
-<h2 id="plugin-filters">Plugin Filters<a class="headerlink" href="#plugin-filters" title="Anchor link to this section for reference">#</a></h2>
+<h3 id="plugin-filters">Plugin Filters<a class="headerlink" href="#plugin-filters" title="Anchor link to this section for reference">#</a></h3>
 <p>These filters are provided as a standard by the macros plugin.</p>
 <table class="pretty" style="background-color: #F0FFFF; border:1px solid #DCDCDC; padding: 5px">
 
@@ -1268,7 +1288,7 @@ documentation project:</p>
 
 </table>
 
-<h2 id="builtin-jinja2-filters">Builtin Jinja2 Filters<a class="headerlink" href="#builtin-jinja2-filters" title="Anchor link to this section for reference">#</a></h2>
+<h3 id="builtin-jinja2-filters">Builtin Jinja2 Filters<a class="headerlink" href="#builtin-jinja2-filters" title="Anchor link to this section for reference">#</a></h3>
 <p>These filters are provided by Jinja2 as a standard.</p>
 <p>See also the <a href="https://jinja.palletsprojects.com/en/2.11.x/templates/#builtin-filters">Jinja2 documentation on builtin filters</a>).</p>
 <table class="pretty" style="background-color: #F0FFFF; border:1px solid #DCDCDC; padding: 5px">
@@ -1831,7 +1851,7 @@ documentation project:</p>
 <aside>
     <p>
         <small>
-            <i>Page last updated 2023-02-03. See revision history on <a href="https://github.com/ntno/mkdocs-demo/commits/main/docs/macros-test.md">GitHub</a>.</i>
+            <i>Page last updated 2023-07-22. See revision history on <a href="https://github.com/ntno/mkdocs-demo/commits/main/docs/macros-test.md">GitHub</a>.</i>
         </small>
     </p>
 </aside>
@@ -1839,10 +1859,12 @@ documentation project:</p>
             </main>
         </div>
         <hr><footer>
-    <div class="container">
-        
-        <p class="text-center text-muted">Copyright 2023 Natan Organick, All rights reserved</p>
-         Site built with <a href="http://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/ntno/mkdocs-terminal">Terminal for MkDocs</a>.
+    <div class="terminal-mkdocs-footer-grid">
+        <div id="terminal-mkdocs-footer-copyright-info">
+            
+            <p class="text-center text-muted">Copyright 2023 Natan Organick, All rights reserved</p>
+             Site built with <a href="http://www.mkdocs.org">MkDocs</a> and <a href="https://github.com/ntno/mkdocs-terminal">Terminal for MkDocs</a>.
+        </div>
     </div>
 </footer>
     </div>
