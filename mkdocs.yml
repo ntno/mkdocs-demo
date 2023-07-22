@@ -45,6 +45,7 @@ markdown_extensions:
 theme:
   name: terminal
   features:
+    - footer.prev_next
     - navigation.side.indexes
     - revision.date
     - revision.history

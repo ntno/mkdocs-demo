@@ -58,7 +58,7 @@ jobs:
       - name: Install Buildenv
         uses: ntno/setup-buildenv@v1     
       - name: Build MkDocs
-        uses: ntno/build-mkdocs-composite-action@v4
+        uses: ntno/build-mkdocs-composite-action@v5
         with:
           archive-enabled: true
           version: ${{ inputs.tag }}/${{ inputs.env-vars }}
@@ -83,7 +83,7 @@ jobs:
       - name: Install Buildenv      
         uses: ntno/setup-buildenv@v1
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2.2.0
         with:
           aws-region: us-east-2
           role-to-assume: ${{ secrets.DEVELOPMENT_IAM_ROLE_ARN }}
