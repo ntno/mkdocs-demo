@@ -28,7 +28,7 @@ ex: `docs/overrides/multi-size-headers.css`:
 
 ```css
 h1 {
-    font-size: 2em !important;
+    font-size: 2.2em !important;
 }
 
 h2 {
