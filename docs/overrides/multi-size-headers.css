@@ -1,23 +1,23 @@
-h1 {
-    font-size: 2.2em !important;
+.terminal h1 {
+    font-size: 2.33em;
 }
 
-h2 {
-    font-size: 1.8em !important;
+.terminal h2 {
+    font-size: 1.83em;
 }
 
-h3 {
-    font-size: 1.6em !important;
+.terminal h3 {
+    font-size: 1.50em;
 }
 
-h4 {
-    font-size: 1.4em !important;
+.terminal h4 {
+    font-size: 1.33em;
 }
 
-h5 {
-    font-size: 1.2em !important;
+.terminal h5 {
+    font-size: 1.16em;
 }
 
-h6 {
-    font-size: 1em !important;
+.terminal h6 {
+    font-size: 1em;
 }
