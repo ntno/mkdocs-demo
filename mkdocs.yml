@@ -21,6 +21,7 @@ nav:
       - Deployment: 'user-guide/deploying-your-docs.md'
       - Styling: 'user-guide/styling-your-docs.md'
       - Writing: 'user-guide/writing-your-docs.md'
+    - Override Theme: 'header-override-example.md'
 
     
 markdown_extensions:
@@ -44,6 +45,7 @@ markdown_extensions:
 
 theme:
   name: terminal
+  custom_dir: overrides
   features:
     - footer.prev_next
     - navigation.side.indexes
