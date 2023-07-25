@@ -1,6 +1,6 @@
 # Theme Override Example
 
-This page demonstrates how the [`custom_dir` MkDocs theme option](https://www.mkdocs.org/user-guide/customizing-your-theme/#using-the-theme-custom_dir) can be used to customize a theme.  First, add an `overrides` folder to your project folder and a new CSS folder inside of that folder:
+This page demonstrates how the [`custom_dir` MkDocs theme option](https://www.mkdocs.org/user-guide/customizing-your-theme/#using-the-theme-custom_dir) can be used to customize a theme.  First, add an `overrides` folder to your project folder and a CSS folder inside of that folder:
 
 ```text
 my-project/
@@ -16,13 +16,6 @@ my-project/
 ├─ .gitignore
 ├─ mkdocs.yml
 ├─ README.md
-```
-
-Then add the following configuration to your `mkdocs.yml` file:
-```yaml
-theme:
-  name: terminal
-  custom_dir: overrides
 ```
 
 Include the changes you want to make in your CSS file.  
@@ -65,6 +58,15 @@ Extend the theme's base partial by adding `overrides/main.html`:
 {%- endblock extrahead %}
 {% endraw %}
 ```
+
+
+Then add the following configuration to your `mkdocs.yml` file:
+```yaml
+theme:
+  name: terminal
+  custom_dir: overrides
+```
+
 ---
 
 ### Table of Contents Nesting Example
